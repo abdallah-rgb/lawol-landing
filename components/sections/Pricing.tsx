@@ -1,0 +1,94 @@
+"use client";
+
+import { Check } from "lucide-react";
+import Link from "next/link";
+import { Reveal } from "@/components/ui/Reveal";
+
+export function Pricing() {
+  return (
+    <section id="pricing" className="py-32 md:py-40 bg-white">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="mb-20 md:mb-32 text-center">
+          <Reveal width="100%">
+            <h2 className="text-4xl font-extrabold text-secondary md:text-6xl tracking-tight">
+              Tarifs simples
+            </h2>
+          </Reveal>
+          <Reveal width="100%" delay={0.2}>
+            <p className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
+              Commencez gratuitement, payez seulement si vous êtes satisfait.
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
+          {/* Free Plan */}
+          <Reveal width="100%" delay={0.2}>
+            <div className="rounded-3xl border border-border bg-white p-8 transition-all hover:border-gray-300 md:p-12">
+              <h3 className="mb-4 text-3xl font-bold text-secondary">Gratuit</h3>
+              <div className="mb-8 flex items-baseline gap-1">
+                <span className="text-5xl font-extrabold text-secondary">0 FCFA</span>
+                <span className="text-xl text-gray-500">/ mois</span>
+              </div>
+              <p className="mb-8 text-lg text-gray-600">
+                Pour les particuliers qui cherchent une pièce occasionnellement.
+              </p>
+              <ul className="mb-8 space-y-4">
+                {["Recherche illimitée", "Accès aux prix publics", "Support par email"].map(
+                  (item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-gray-600">
+                      <Check className="h-5 w-5 text-green-500" />
+                      {item}
+                    </li>
+                  )
+                )}
+              </ul>
+              <Link
+                href="#"
+                className="block w-full rounded-xl border border-gray-200 bg-white py-4 text-center font-semibold text-secondary transition-all hover:bg-gray-50"
+              >
+                Commencer
+              </Link>
+            </div>
+          </Reveal>
+
+          {/* Pro Plan */}
+          <Reveal width="100%" delay={0.4}>
+            <div className="relative overflow-hidden rounded-3xl border border-primary bg-secondary p-8 text-white shadow-2xl md:p-12">
+              <div className="absolute top-0 right-0 rounded-bl-xl bg-primary px-4 py-1 text-sm font-medium">
+                Populaire
+              </div>
+              <h3 className="mb-4 text-3xl font-bold">Pro</h3>
+              <div className="mb-8 flex items-baseline gap-1">
+                <span className="text-5xl font-extrabold">5.000 FCFA</span>
+                <span className="text-xl text-gray-400">/ mois</span>
+              </div>
+              <p className="mb-8 text-lg text-gray-300">
+                Pour les garages et les revendeurs qui veulent aller plus vite.
+              </p>
+              <ul className="mb-8 space-y-4">
+                {[
+                  "Recherches prioritaires",
+                  "Prix négociés (-15%)",
+                  "Support WhatsApp dédié",
+                  "Tableau de bord commandes",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-gray-200">
+                    <Check className="h-5 w-5 text-primary" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="#"
+                className="block w-full rounded-xl bg-primary py-4 text-center font-semibold text-white transition-all hover:bg-red-700"
+              >
+                S'abonner
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,43 @@
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { Hero } from "@/components/sections/Hero";
+import { Problems } from "@/components/sections/Problems";
+import { HowItWorks } from "@/components/sections/HowItWorks";
+import { Features } from "@/components/sections/Features";
+import { Personas } from "@/components/sections/Personas";
+import { Testimonials } from "@/components/sections/Testimonials";
+import { Pricing } from "@/components/sections/Pricing";
+import { CTA } from "@/components/sections/CTA";
+import { StickySection } from "@/components/ui/StickySection";
+
+export default function Home() {
+  return (
+    <main className="min-h-screen relative">
+      <Navbar />
+      
+      <StickySection index={1} className="bg-white">
+        <Hero />
+      </StickySection>
+      
+      <StickySection index={2} className="bg-white">
+        <Problems />
+      </StickySection>
+      
+      <StickySection index={3} className="bg-gray-50">
+        <HowItWorks />
+      </StickySection>
+      
+      <StickySection index={4} className="bg-bg-alt">
+        <Features />
+      </StickySection>
+
+      <div className="relative z-50">
+        <Personas />
+        <Testimonials />
+        <Pricing />
+        <CTA />
+        <Footer />
+      </div>
+    </main>
+  );
+}
