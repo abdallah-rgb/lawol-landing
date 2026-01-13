@@ -5,6 +5,8 @@ import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { FloatingIcons } from "@/components/ui/FloatingIcons";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
+import { ThemeProvider } from "@/components/theme-provider";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -26,15 +28,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className="scroll-smooth">
+    <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground transition-colors duration-300`}
       >
-        <SmoothScroll>
-          <FloatingIcons />
-          {children}
-          <ScrollToTop />
-        </SmoothScroll>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <SmoothScroll>
+            <FloatingIcons />
+            {children}
+            <ScrollToTop />
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,33 +1,87 @@
 @import "tailwindcss";
 
 :root {
+  /* Light Mode - Base */
   --background: #ffffff;
   --foreground: #171717;
   
-  /* Custom Colors from Landing Page */
-  --primary: #C41E3A; /* Red - Original Brand Color */
-  --secondary: #1F2937; /* Gray 900 - For Headings */
-  --accent: #B91C1C; /* Red 700 */
-  --success: #10B981;
-  --bg-alt: #F9FAFB; /* Gray 50 - Light Alt Background */
-  --text-light: #6B7280; /* Gray 500 */
-  --border: #E5E7EB; /* Gray 200 */
+  /* Semantic Colors */
+  --primary: #C41E3A; /* Red - Original Brand */
+  --primary-foreground: #ffffff;
+  
+  --secondary: #1F2937; /* Gray 900 */
+  --secondary-foreground: #ffffff;
+  
+  --muted: #f3f4f6; /* Gray 100 */
+  --muted-foreground: #6b7280; /* Gray 500 */
+  
+  --accent: #f3f4f6; /* Gray 100 */
+  --accent-foreground: #111827; /* Gray 900 */
+  
+  --card: #ffffff;
+  --card-foreground: #171717;
+  
+  --border: #e5e7eb; /* Gray 200 */
+  --input: #e5e7eb;
+  
+  /* Custom specific */
+  --bg-alt: #F9FAFB; /* Gray 50 */
+}
+
+.dark {
+  /* Dark Mode - Premium Tech */
+  --background: #0a0a0a; /* Deep Black */
+  --foreground: #ededed; /* Off-white */
+  
+  /* Semantic Colors - Violet Accent */
+  --primary: #7C3AED; /* Violet */
+  --primary-foreground: #ffffff;
+  
+  --secondary: #ededed; /* Whiteish */
+  --secondary-foreground: #0a0a0a;
+  
+  --muted: #171717; /* Gray 900 */
+  --muted-foreground: #a3a3a3; /* Gray 400 */
+  
+  --accent: #171717; /* Gray 900 */
+  --accent-foreground: #ededed;
+  
+  --card: #171717; /* Dark Gray */
+  --card-foreground: #ededed;
+  
+  --border: #262626; /* Gray 800 */
+  --input: #262626;
+  
+  /* Custom specific */
+  --bg-alt: #111111; /* Slightly lighter black */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  
+  --color-border: var(--border);
+  --color-input: var(--input);
+  
+  --color-bg-alt: var(--bg-alt);
+  
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-
-  /* Map custom colors */
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-accent: var(--accent);
-  --color-success: var(--success);
-  --color-bg-alt: var(--bg-alt);
-  --color-text-light: var(--text-light);
-  --color-border: var(--border);
 }
 
 body {

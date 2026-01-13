@@ -15,19 +15,19 @@ export default function Home() {
     <main className="min-h-screen relative">
       <Navbar />
       
-      <StickySection index={1} className="bg-white">
+      <StickySection index={1} className="bg-background">
         <Hero />
       </StickySection>
       
-      <StickySection index={2} className="bg-white">
+      <StickySection index={2} className="bg-background">
         <Problems />
       </StickySection>
       
-      <StickySection index={3} className="bg-gray-50">
+      <StickySection index={3} className="bg-muted/50">
         <HowItWorks />
       </StickySection>
       
-      <StickySection index={4} className="bg-bg-alt">
+      <StickySection index={4} className="bg-muted">
         <Features />
       </StickySection>
 

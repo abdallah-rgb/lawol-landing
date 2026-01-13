@@ -20,12 +20,12 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[95vh] items-center overflow-hidden bg-white px-4 py-20 lg:py-0"
+      className="relative flex min-h-[95vh] lg:min-h-0 lg:h-full items-center overflow-hidden bg-background px-4 py-20 lg:py-0"
     >
       {/* Background Parallax Element */}
       <motion.div
         style={{ y: yBackground, opacity: opacityBackground }}
-        className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_10%_20%,rgba(196,30,58,0.03),transparent_40%)]"
+        className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_10%_20%,rgba(196,30,58,0.03),transparent_40%)] dark:bg-[radial-gradient(circle_at_10%_20%,rgba(124,58,237,0.1),transparent_40%)]"
       />
 
       <div className="container relative z-10 mx-auto max-w-7xl">
@@ -33,14 +33,14 @@ export function Hero() {
           {/* Left Column: Content */}
           <div className="text-center lg:text-left">
             <Reveal width="100%" delay={0.1}>
-              <div className="mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
+              <div className="mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary border border-primary/20">
                 <Rocket className="mr-2 h-4 w-4" />
                 Lancement de la phase Bêta
               </div>
             </Reveal>
 
             <Reveal width="100%" delay={0.2} duration={1.0}>
-              <h1 className="mb-6 text-5xl font-extrabold leading-tight text-secondary md:text-7xl tracking-tight">
+              <h1 className="mb-6 text-5xl font-extrabold leading-tight text-foreground md:text-7xl tracking-tight">
                 Identifiez. Comprenez.{" "}
                 <span className="relative inline-block text-primary">
                   <motion.span
@@ -55,10 +55,10 @@ export function Hero() {
             </Reveal>
 
             <Reveal width="100%" delay={0.4} duration={1.0}>
-              <p className="mb-8 text-lg text-gray-600 md:text-xl lg:text-2xl font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="mb-8 text-lg text-muted-foreground md:text-xl lg:text-2xl font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 lAwôl transforme l’identification en compréhension, la compatibilité en choix éclairé et la recherche en décision assistée.
               </p>
-              <p className="mb-8 text-base text-gray-500 md:text-lg font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="mb-8 text-base text-muted-foreground/80 md:text-lg font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 L'intelligence artificielle pour choisir la meilleure pièce, au meilleur prix.
               </p>
             </Reveal>
@@ -67,29 +67,27 @@ export function Hero() {
               <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start justify-center">
                 <Link
                   href="#search"
-                  className="group relative overflow-hidden rounded-full bg-primary px-8 py-4 text-lg font-semibold text-white transition-all hover:scale-105 hover:shadow-xl hover:shadow-primary/20"
+                  className="group relative overflow-hidden rounded-full bg-primary border-2 border-primary px-8 py-4 text-lg font-bold text-primary-foreground transition-all duration-300 hover:bg-background hover:text-primary hover:scale-105 hover:shadow-xl hover:shadow-primary/20"
                 >
                   <span className="relative z-10">Trouver ma pièce</span>
-                  <div className="absolute inset-0 -z-0 h-full w-full translate-y-full bg-white/20 transition-transform duration-300 group-hover:translate-y-0" />
                 </Link>
                 <Link
                   href="#how-it-works"
-                  className="group relative overflow-hidden rounded-full border border-gray-200 bg-transparent px-8 py-4 text-lg font-semibold text-secondary transition-all duration-300 hover:border-secondary hover:text-white hover:shadow-lg"
+                  className="group relative overflow-hidden rounded-full bg-background border-2 border-secondary px-8 py-4 text-lg font-bold text-secondary transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:scale-105 hover:shadow-xl"
                 >
                   <span className="relative z-10">Comment ça marche</span>
-                  <div className="absolute inset-0 -z-0 h-full w-full bg-secondary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </Link>
               </div>
             </Reveal>
 
             <Reveal width="100%" delay={0.8} yOffset={30}>
-              <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-8 text-sm font-medium text-text-light">
+              <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-8 text-sm font-medium text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-2">
                     {[1, 2, 3, 4].map((i) => (
                       <div
                         key={i}
-                        className="h-8 w-8 rounded-full border-2 border-background bg-gray-800"
+                        className="h-8 w-8 rounded-full border-2 border-background bg-muted"
                         style={{
                           backgroundImage: `url(https://i.pravatar.cc/100?img=${i + 10})`,
                           backgroundSize: "cover",
@@ -115,7 +113,7 @@ export function Hero() {
           {/* Right Column: Visuals */}
           <div className="relative hidden lg:flex items-center justify-center">
             <Reveal width="100%" delay={0.4} className="w-full">
-              <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50 bg-white">
+              <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-border bg-card">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent z-10 pointer-events-none" />
                 
                 {/* 
@@ -140,18 +138,18 @@ export function Hero() {
                     duration: 0.8,
                     ease: [0.25, 0.46, 0.45, 0.94]
                   }}
-                  className="absolute bottom-6 left-6 right-6 rounded-xl bg-white/90 p-4 backdrop-blur-md border border-white/40 shadow-lg z-20 flex items-center justify-between"
+                  className="absolute bottom-6 left-6 right-6 rounded-xl bg-card/90 p-4 backdrop-blur-md border border-border shadow-lg z-20 flex items-center justify-between"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-success/10 flex items-center justify-center text-success">
+                    <div className="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
                       <ShieldCheck className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-secondary font-bold text-sm">Pièces Certifiées</p>
-                      <p className="text-text-light text-xs">Qualité garantie à 100%</p>
+                      <p className="text-foreground font-bold text-sm">Pièces Certifiées</p>
+                      <p className="text-muted-foreground text-xs">Qualité garantie à 100%</p>
                     </div>
                   </div>
-                  <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
+                  <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
                 </motion.div>
               </div>
             </Reveal>

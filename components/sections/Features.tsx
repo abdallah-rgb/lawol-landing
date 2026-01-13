@@ -45,16 +45,16 @@ const features = [
 
 export function Features() {
   return (
-    <section id="features" className="bg-bg-alt py-24">
+    <section id="features" className="bg-bg-alt py-24 lg:py-0 lg:h-full lg:flex lg:items-center transition-colors duration-300">
       <div className="container mx-auto max-w-7xl px-4 md:px-6">
         <div className="mb-16 text-center">
           <Reveal width="100%" delay={0.1}>
-            <h2 className="text-4xl font-extrabold text-secondary md:text-6xl tracking-tight">
+            <h2 className="text-4xl font-extrabold text-foreground md:text-6xl tracking-tight">
               Le changement de paradigme
             </h2>
           </Reveal>
           <Reveal width="100%" delay={0.25}>
-            <p className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="mt-6 text-xl text-muted-foreground max-w-2xl mx-auto">
               Ce n’est plus le véhicule qui est au centre, c’est la pièce.
             </p>
           </Reveal>
@@ -63,14 +63,14 @@ export function Features() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <Reveal key={index} delay={feature.delay} width="100%">
-              <div className="rounded-xl bg-white p-8 shadow-sm transition-all hover:-translate-y-2 hover:shadow-lg h-full border border-gray-100 hover:border-primary/50">
-                <div className="mb-6 inline-block rounded-lg bg-primary/10 p-4 text-primary">
+              <div className="rounded-xl bg-card p-8 shadow-sm transition-all hover:-translate-y-2 hover:shadow-lg h-full border border-border hover:border-primary/50 group">
+                <div className="mb-6 inline-block rounded-lg bg-primary/10 p-4 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                   <feature.icon className="h-8 w-8" />
                 </div>
-                <h3 className="mb-4 text-2xl font-bold text-secondary">
+                <h3 className="mb-4 text-2xl font-bold text-foreground">
                   {feature.title}
                 </h3>
-                <p className="text-base text-gray-600 leading-relaxed">{feature.description}</p>
+                <p className="text-base text-muted-foreground leading-relaxed">{feature.description}</p>
               </div>
             </Reveal>
           ))}
