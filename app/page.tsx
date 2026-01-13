@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { IntroOverlay } from "@/components/layout/IntroOverlay";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
@@ -11,8 +16,14 @@ import { CTA } from "@/components/sections/CTA";
 import { StickySection } from "@/components/ui/StickySection";
 
 export default function Home() {
+  const [showIntro, setShowIntro] = useState(true);
+
   return (
     <main className="min-h-screen relative">
+      <AnimatePresence mode="wait">
+        {showIntro && <IntroOverlay onComplete={() => setShowIntro(false)} />}
+      </AnimatePresence>
+
       <Navbar />
       
       <StickySection index={1} className="bg-background">
