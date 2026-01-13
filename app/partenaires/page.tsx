@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArrowRight, Database, FileSpreadsheet, Server, ShieldCheck, TrendingUp, Globe } from "lucide-react";
 
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+
 export default function PartnersPage() {
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact-form');
@@ -14,6 +17,8 @@ export default function PartnersPage() {
 
   return (
     <main className="flex min-h-screen flex-col bg-background text-foreground transition-colors duration-300">
+      <Navbar />
+      
       {/* Hero Section */}
       <section className="relative flex min-h-[70vh] items-center overflow-hidden bg-background px-4 py-20">
         <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_10%_20%,rgba(196,30,58,0.03),transparent_40%)] dark:bg-[radial-gradient(circle_at_10%_20%,rgba(124,58,237,0.1),transparent_40%)]" />
@@ -184,6 +189,7 @@ export default function PartnersPage() {
           </div>
         </div>
       </section>
+      <Footer />
     </main>
   );
 }

@@ -20,7 +20,7 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[95vh] lg:min-h-0 lg:h-full items-center overflow-hidden bg-background px-4 py-20 lg:py-0"
+      className="relative flex min-h-[95vh] lg:min-h-0 lg:h-full items-center overflow-hidden bg-background px-4 py-16 lg:py-0"
     >
       {/* Background Parallax Element */}
       <motion.div
@@ -29,25 +29,25 @@ export function Hero() {
       />
 
       <div className="container relative z-10 mx-auto max-w-7xl">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           {/* Left Column: Content */}
           <div className="text-center lg:text-left">
             <Reveal width="100%" delay={0.1}>
-              <div className="mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary border border-primary/20">
+              <div className="mb-4 lg:mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary border border-primary/20">
                 <Rocket className="mr-2 h-4 w-4" />
                 Lancement de la phase Bêta
               </div>
             </Reveal>
 
             <Reveal width="100%" delay={0.2} duration={1.0}>
-              <h1 className="mb-6 text-5xl font-extrabold leading-tight text-foreground md:text-7xl tracking-tight">
+              <h1 className="mb-4 lg:mb-6 text-4xl font-extrabold leading-tight text-foreground md:text-6xl tracking-tight">
                 Identifiez. Comprenez.{" "}
                 <span className="relative inline-block text-primary">
                   <motion.span
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
                     transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
-                    className="absolute bottom-2 left-0 -z-10 h-3 w-full bg-primary/20 md:bottom-4 md:h-5"
+                    className="absolute bottom-1 left-0 -z-10 h-2 w-full bg-primary/20 md:bottom-2 md:h-4"
                   />
                   Choisissez.
                 </span>
@@ -55,10 +55,10 @@ export function Hero() {
             </Reveal>
 
             <Reveal width="100%" delay={0.4} duration={1.0}>
-              <p className="mb-8 text-lg text-muted-foreground md:text-xl lg:text-2xl font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="mb-6 text-base text-muted-foreground md:text-lg lg:text-xl font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 lAwôl transforme l’identification en compréhension, la compatibilité en choix éclairé et la recherche en décision assistée.
               </p>
-              <p className="mb-8 text-base text-muted-foreground/80 md:text-lg font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="mb-6 text-sm text-muted-foreground/80 md:text-base font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 L'intelligence artificielle pour choisir la meilleure pièce, au meilleur prix.
               </p>
             </Reveal>
@@ -67,13 +67,13 @@ export function Hero() {
               <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start justify-center">
                 <Link
                   href="#search"
-                  className="group relative overflow-hidden rounded-full bg-primary border-2 border-primary px-8 py-4 text-lg font-bold text-primary-foreground transition-all duration-300 hover:bg-background hover:text-primary hover:scale-105 hover:shadow-xl hover:shadow-primary/20"
+                  className="group relative overflow-hidden rounded-full bg-primary border-2 border-primary px-6 py-3.5 text-base font-bold text-primary-foreground transition-all duration-300 hover:bg-background hover:text-primary hover:scale-105 hover:shadow-xl hover:shadow-primary/20"
                 >
                   <span className="relative z-10">Trouver ma pièce</span>
                 </Link>
                 <Link
                   href="#how-it-works"
-                  className="group relative overflow-hidden rounded-full bg-background border-2 border-secondary px-8 py-4 text-lg font-bold text-secondary transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:scale-105 hover:shadow-xl"
+                  className="group relative overflow-hidden rounded-full bg-background border-2 border-secondary px-6 py-3.5 text-base font-bold text-secondary transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:scale-105 hover:shadow-xl"
                 >
                   <span className="relative z-10">Comment ça marche</span>
                 </Link>
@@ -81,7 +81,7 @@ export function Hero() {
             </Reveal>
 
             <Reveal width="100%" delay={0.8} yOffset={30}>
-              <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-8 text-sm font-medium text-muted-foreground">
+              <div className="mt-8 lg:mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs md:text-sm font-medium text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-2">
                     {[1, 2, 3, 4].map((i) => (

@@ -24,38 +24,38 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-32 md:py-40 lg:py-0 lg:h-full lg:flex lg:items-center bg-background transition-colors duration-300">
+    <section id="how-it-works" className="py-16 md:py-20 lg:py-0 lg:h-full lg:flex lg:items-center bg-background transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="mb-20 md:mb-32 text-center">
+        <div className="mb-12 md:mb-16 text-center">
           <Reveal width="100%" delay={0.1}>
-            <h2 className="text-4xl font-extrabold text-foreground md:text-6xl tracking-tight">
+            <h2 className="text-3xl font-extrabold text-foreground md:text-5xl tracking-tight">
               Comment ça marche ?
             </h2>
           </Reveal>
           <Reveal width="100%" delay={0.25}>
-            <p className="mt-6 text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
               Identification. Compréhension. Décision.
             </p>
           </Reveal>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3 relative z-10">
+        <div className="grid gap-6 md:grid-cols-3 relative z-10">
           {steps.map((step, index) => (
             <Reveal key={index} delay={0.4 + index * 0.2} width="100%">
-              <div className="group relative rounded-2xl bg-card p-10 text-center shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl border border-border hover:border-primary/50 h-full">
-                <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-4xl font-bold text-primary shadow-inner transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground">
-                  <step.icon className="h-10 w-10" />
+              <div className="group relative rounded-2xl bg-card p-8 text-center shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl border border-border hover:border-primary/50 h-full">
+                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-3xl font-bold text-primary shadow-inner transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground">
+                  <step.icon className="h-8 w-8" />
                 </div>
-                <h3 className="mb-6 text-3xl font-bold text-foreground">
+                <h3 className="mb-4 text-2xl font-bold text-foreground">
                   {step.title}
                 </h3>
-                <p className="leading-relaxed text-muted-foreground text-lg">
+                <p className="leading-relaxed text-muted-foreground text-base">
                   {step.description}
                 </p>
                 
                 {/* Connector Line (visible on desktop) */}
                 {index !== steps.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-border -z-10 translate-x-1/2" />
+                  <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-0.5 bg-border -z-10 translate-x-1/2" />
                 )}
               </div>
             </Reveal>

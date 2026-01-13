@@ -8,10 +8,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const navLinks = [
-  { name: "Comment ça marche", href: "#how-it-works" },
-  { name: "Fonctionnalités", href: "#features" },
-  { name: "Tarifs", href: "#pricing" },
-  { name: "Contact", href: "#contact" },
+  { name: "Comment ça marche", href: "/#how-it-works" },
+  { name: "Fonctionnalités", href: "/#features" },
+  { name: "Tarifs", href: "/#pricing" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 export function Navbar() {
