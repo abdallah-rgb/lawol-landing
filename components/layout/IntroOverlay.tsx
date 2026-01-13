@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Power, Settings, Gauge, Wrench, Disc, CircleDashed } from "lucide-react";
+import { motion } from "framer-motion";
+import { Settings, Gauge, Wrench, Disc, CircleDashed, CarFront } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface IntroOverlayProps {
@@ -24,7 +24,7 @@ export function IntroOverlay({ onComplete }: IntroOverlayProps) {
 
   const handleStart = () => {
     setIsStarting(true);
-    // Simulate engine start delay
+    // Wait for animation to finish before unlocking
     setTimeout(() => {
       onComplete();
     }, 1500);
@@ -32,9 +32,9 @@ export function IntroOverlay({ onComplete }: IntroOverlayProps) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background text-foreground"
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background text-foreground overflow-hidden"
       initial={{ opacity: 1 }}
-      exit={{ y: "-100%", transition: { duration: 0.8, ease: "easeInOut" } }}
+      exit={{ opacity: 0, transition: { duration: 0.5 } }}
     >
       {/* Background Animated Parts (Subtle) */}
       <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
@@ -66,7 +66,7 @@ export function IntroOverlay({ onComplete }: IntroOverlayProps) {
         })}
       </div>
 
-      <div className="relative z-10 flex flex-col items-center gap-12">
+      <div className="relative z-10 flex flex-col items-center gap-12 w-full max-w-2xl px-4">
         {/* Logo Text */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -82,64 +82,73 @@ export function IntroOverlay({ onComplete }: IntroOverlayProps) {
           </p>
         </motion.div>
 
-        {/* Start Button */}
-        <motion.button
-          onClick={handleStart}
-          disabled={isStarting}
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.5, type: "spring" }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className={cn(
-            "relative group flex items-center justify-center w-32 h-32 md:w-40 md:h-40 rounded-full border-4 transition-all duration-500",
-            isStarting 
-              ? "bg-primary border-primary shadow-[0_0_50px_rgba(124,58,237,0.6)] scale-110" 
-              : "bg-transparent border-muted-foreground hover:border-primary hover:shadow-[0_0_30px_rgba(124,58,237,0.3)]"
-          )}
-        >
-          {/* Pulse Effect */}
-          {!isStarting && (
-            <span className="absolute inset-0 rounded-full border-4 border-primary opacity-0 group-hover:animate-ping" />
-          )}
+        {/* Interactive Car Button */}
+        <div className="relative w-full h-32 flex items-center justify-center">
+          <motion.button
+            onClick={handleStart}
+            disabled={isStarting}
+            initial={{ scale: 0.8, opacity: 0, x: 0 }}
+            animate={
+              isStarting 
+                ? { x: "100vw", opacity: 0, scale: 1.2 } 
+                : { scale: 1, opacity: 1, x: 0 }
+            }
+            transition={
+              isStarting
+                ? { duration: 1.2, ease: "easeIn" }
+                : { delay: 0.5, type: "spring" }
+            }
+            whileHover={!isStarting ? { scale: 1.1 } : {}}
+            whileTap={!isStarting ? { scale: 0.95 } : {}}
+            className="group relative flex flex-col items-center justify-center p-4 focus:outline-none"
+          >
+             {/* Car Icon (Custom styled) */}
+             <div className={cn(
+               "relative z-10 transition-colors duration-300",
+               isStarting ? "text-primary" : "text-foreground group-hover:text-primary"
+             )}>
+                <CarFront size={80} strokeWidth={1.5} />
+                
+                {/* Headlights effect when starting */}
+                {isStarting && (
+                  <>
+                    <motion.div 
+                      initial={{ opacity: 0, width: 0 }}
+                      animate={{ opacity: 0.8, width: 200 }}
+                      className="absolute top-1/2 right-0 h-20 -translate-y-1/2 bg-gradient-to-r from-yellow-200/50 to-transparent blur-xl" 
+                    />
+                  </>
+                )}
+             </div>
 
-          <div className="flex flex-col items-center gap-2">
-            <Power className={cn(
-              "w-12 h-12 transition-colors duration-300",
-              isStarting ? "text-white animate-pulse" : "text-foreground group-hover:text-primary"
-            )} />
-            <span className={cn(
-              "text-xs font-bold uppercase tracking-widest transition-colors duration-300",
-              isStarting ? "text-white" : "text-muted-foreground group-hover:text-primary"
-            )} >
-              Start
-            </span>
-          </div>
+             {/* Text below car */}
+             <span className={cn(
+                "mt-4 text-xs font-bold uppercase tracking-widest transition-colors duration-300",
+                isStarting ? "opacity-0" : "text-muted-foreground group-hover:text-primary"
+             )}>
+               Tap to Drive
+             </span>
 
-          {/* Rotating Ring when starting */}
-          {isStarting && (
-            <motion.div
-              className="absolute inset-[-8px] rounded-full border-t-4 border-primary"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            />
-          )}
-        </motion.button>
+             {/* Exhaust smoke effect */}
+             {isStarting && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: [0.8, 0], scale: 2, x: -100 }}
+                  transition={{ duration: 1 }}
+                  className="absolute bottom-4 left-0 w-10 h-10 bg-gray-400/50 rounded-full blur-xl"
+                />
+             )}
+          </motion.button>
+          
+          {/* Road line */}
+          <motion.div 
+            className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-muted-foreground/30 to-transparent w-full"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+          />
+        </div>
       </div>
-
-      {/* Speed Lines Effect on Start */}
-      {isStarting && (
-        <motion.div
-          className="absolute inset-0 z-0 flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="absolute w-full h-2 bg-primary/20 blur-xl animate-pulse top-1/2" />
-          <div className="absolute w-[200%] h-1 bg-primary/50 top-1/2 rotate-45" />
-          <div className="absolute w-[200%] h-1 bg-primary/50 top-1/2 -rotate-45" />
-        </motion.div>
-      )}
     </motion.div>
   );
 }
