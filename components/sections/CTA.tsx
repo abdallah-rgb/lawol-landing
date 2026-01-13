@@ -25,12 +25,12 @@ export function CTA() {
 
             <div className="relative z-10 mx-auto max-w-4xl">
               <Reveal width="100%" delay={0.2}>
-                <h2 className="mb-8 text-5xl font-extrabold text-foreground md:text-7xl tracking-tight leading-none">
+                <h2 className="mb-8 text-5xl font-extrabold text-white md:text-7xl tracking-tight leading-none">
                   Prêt à transformer votre expérience ?
                 </h2>
               </Reveal>
               <Reveal width="100%" delay={0.4}>
-                <p className="mb-12 text-2xl text-muted-foreground font-light leading-relaxed">
+                <p className="mb-12 text-2xl text-white/90 font-light leading-relaxed">
                   Ce n’est pas un site de vente de pièces. C’est la couche d’intelligence qui manquait au marché.
                 </p>
               </Reveal>
@@ -40,11 +40,11 @@ export function CTA() {
                   <input
                     type="email"
                     placeholder="Votre adresse email"
-                    className="flex-grow rounded-full border-2 border-border bg-background/50 px-6 py-4 text-foreground placeholder-muted-foreground backdrop-blur-sm transition-all focus:border-primary focus:bg-background focus:outline-none"
+                    className="flex-grow rounded-full border-2 border-white/20 bg-white/10 px-6 py-4 text-white placeholder-white/60 backdrop-blur-sm transition-all focus:border-white focus:bg-white/20 focus:outline-none"
                   />
                   <button
                     type="submit"
-                    className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full bg-primary border-2 border-primary px-8 py-4 font-bold text-primary-foreground transition-all duration-300 hover:bg-background hover:text-primary hover:scale-105 hover:shadow-xl"
+                    className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full bg-white border-2 border-white px-8 py-4 font-bold text-primary transition-all duration-300 hover:bg-transparent hover:text-white hover:scale-105 hover:shadow-xl"
                   >
                     <span className="relative z-10 flex items-center gap-2">
                       S'inscrire
@@ -52,7 +52,7 @@ export function CTA() {
                     </span>
                   </button>
                 </form>
-                <p className="mt-4 text-sm text-muted-foreground">
+                <p className="mt-4 text-sm text-white/60">
                   Pas de spam, désabonnement à tout moment.
                 </p>
               </Reveal>
