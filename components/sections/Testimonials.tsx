@@ -7,19 +7,22 @@ const testimonials = [
   {
     name: "Moussa Diop",
     role: "Chauffeur Taxi",
-    content: "J'ai trouvé un alternateur pour ma Toyota en 2 minutes. Le prix était 30% moins cher que chez mon vendeur habituel.",
+    content:
+      "Avec lAwôl, j&apos;ai comparé plusieurs alternateurs pour ma Toyota en quelques secondes et choisi l&apos;offre la plus intéressante.",
     image: "https://i.pravatar.cc/100?img=11",
   },
   {
     name: "Aminata Sow",
     role: "Particulier",
-    content: "Service impeccable. La pièce a été livrée directement chez mon mécanicien. Je recommande vivement !",
+    content:
+      "Je vois enfin clair entre les références. Le comparateur m&apos;a aidée à choisir la bonne pièce sans passer des heures au téléphone.",
     image: "https://i.pravatar.cc/100?img=5",
   },
   {
     name: "Garage Moderne",
     role: "Partenaire Pro",
-    content: "lAwôl nous fait gagner un temps précieux. Plus besoin d'appeler 10 fournisseurs pour trouver une pièce rare.",
+    content:
+      "lAwôl aligne les offres de nos fournisseurs sur un seul écran. On garde la relation client, eux comparent les prix en toute transparence.",
     image: "https://i.pravatar.cc/100?img=3",
   },
 ];
@@ -46,7 +49,7 @@ export function Testimonials() {
                   ))}
                 </div>
                 <p className="mb-6 flex-grow text-lg italic text-muted-foreground">
-                  "{testimonial.content}"
+                  &quot;{testimonial.content}&quot;
                 </p>
                 <div className="flex items-center gap-4">
                   <div

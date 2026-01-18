@@ -6,7 +6,7 @@
   --foreground: #171717;
   
   /* Semantic Colors */
-  --primary: #C41E3A; /* Red - Original Brand */
+  --primary: #007F80; /* Brand primary color */
   --primary-foreground: #ffffff;
   
   --secondary: #1F2937; /* Gray 900 */
@@ -30,11 +30,11 @@
 
 .dark {
   /* Dark Mode - Premium Tech */
-  --background: #0a0a0a; /* Deep Black */
+  --background: #000000; /* Pure Black */
   --foreground: #ededed; /* Off-white */
   
-  /* Semantic Colors - Violet Accent */
-  --primary: #7C3AED; /* Violet */
+  /* Semantic Colors - Primary Accent */
+  --primary: #007F80; /* Brand primary color */
   --primary-foreground: #ffffff;
   
   --secondary: #ededed; /* Whiteish */

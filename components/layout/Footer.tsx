@@ -11,7 +11,7 @@ export function Footer() {
             <div>
               <h4 className="mb-4 text-xl font-bold">lAwôl</h4>
               <p className="text-muted-foreground">
-                Le hub d'identification de pièces auto : compatibilité, équivalences et choix assisté, sans gérer la vente.
+                Le hub d&apos;identification de pièces auto : compatibilité, équivalences et choix assisté, sans gérer la vente.
               </p>
             </div>
 
@@ -25,10 +25,9 @@ export function Footer() {
             </div>
 
             <div>
-              <h4 className="mb-4 text-lg font-bold">Légal & Partenaires</h4>
+              <h4 className="mb-4 text-lg font-bold">Légal</h4>
               <ul className="space-y-2">
-                <li><Link href="/partenaires" className="text-primary hover:text-foreground transition-colors font-medium">Devenir Partenaire</Link></li>
-                <li><Link href="#" className="text-muted-foreground hover:text-primary transition-colors">Conditions d'utilisation</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-primary transition-colors">Conditions d&apos;utilisation</Link></li>
                 <li><Link href="#" className="text-muted-foreground hover:text-primary transition-colors">Politique de confidentialité</Link></li>
               </ul>
             </div>
