@@ -14,7 +14,7 @@ const features = [
   {
     icon: BrainCircuit,
     title: "IA de Précision",
-    description: "Analyse visuelle, géométrie et OCR. L'IA réduit l'ambiguïté dès l'entrée pour une identification fiable.",
+    description: "Analyse visuelle et OCR pour remonter un CPN, un score de confiance et jusqu'à 3 candidats. En cas de doute, l'utilisateur valide.",
     delay: 0.45,
   },
   {
@@ -32,13 +32,13 @@ const features = [
   {
     icon: GitMerge,
     title: "Compatibilités Élargies",
-    description: "Découvrez les véhicules compatibles et les options équivalentes. « Même pièce, autre marque, moins chère ».",
+    description: "Toujours afficher le véhicule issu du VIN ou la liste des véhicules compatibles, ainsi que les équivalences inter-marques validées.",
     delay: 0.6,
   },
   {
     icon: Lightbulb,
     title: "Assistance Intelligente",
-    description: "Schémas techniques et conseils pour confirmer visuellement la pièce et sécuriser votre décision.",
+    description: "Schémas techniques affichés dès qu'ils existent, calcul du % d'économie et transparence totale sur les options disponibles.",
     delay: 0.65,
   },
 ];

@@ -34,7 +34,7 @@ export function HowItWorks() {
           </Reveal>
           <Reveal width="100%" delay={0.25}>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Identification. Compréhension. Décision.
+              Identification multi-entrées. Compréhension assistée. Écran Résultats unique, quel que soit le point de départ.
             </p>
           </Reveal>
         </div>

@@ -35,7 +35,7 @@ export function Hero() {
             <Reveal width="100%" delay={0.1}>
               <div className="mb-4 lg:mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary border border-primary/20">
                 <Rocket className="mr-2 h-4 w-4" />
-                Lancement de la phase Bêta
+                Hub d’identification de pièces automobiles
               </div>
             </Reveal>
 
@@ -56,17 +56,17 @@ export function Hero() {
 
             <Reveal width="100%" delay={0.4} duration={1.0}>
               <p className="mb-6 text-base text-muted-foreground md:text-lg lg:text-xl font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                lAwôl transforme l’identification en compréhension, la compatibilité en choix éclairé et la recherche en décision assistée.
+                lAwôl est un hub d’identification : photo, référence OEM ou VIN. Vous donnez ce que vous avez, nous sécurisons la compatibilité.
               </p>
               <p className="mb-6 text-sm text-muted-foreground/80 md:text-base font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                L'intelligence artificielle pour choisir la meilleure pièce, au meilleur prix.
+                Nous ne vendons pas de pièces. Nous révélons les équivalences, le potentiel d’économie et redirigeons vers nos partenaires.
               </p>
             </Reveal>
 
             <Reveal width="100%" delay={0.6}>
               <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start justify-center">
                 <Link
-                  href="#search"
+                  href="/resultats"
                   className="group relative overflow-hidden rounded-full bg-primary border-2 border-primary px-6 py-3.5 text-base font-bold text-primary-foreground transition-all duration-300 hover:bg-background hover:text-primary hover:scale-105 hover:shadow-xl hover:shadow-primary/20"
                 >
                   <span className="relative z-10">Trouver ma pièce</span>

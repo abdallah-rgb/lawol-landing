@@ -11,7 +11,7 @@ export function Footer() {
             <div>
               <h4 className="mb-4 text-xl font-bold">lAwôl</h4>
               <p className="text-muted-foreground">
-                La plateforme d'identification et d'achat de pièces auto la plus simple.
+                Le hub d'identification de pièces auto : compatibilité, équivalences et choix assisté, sans gérer la vente.
               </p>
             </div>
 
@@ -20,7 +20,6 @@ export function Footer() {
               <ul className="space-y-2">
                 <li><Link href="/#how-it-works" className="text-muted-foreground hover:text-primary transition-colors">Comment ça marche</Link></li>
                 <li><Link href="/#features" className="text-muted-foreground hover:text-primary transition-colors">Fonctionnalités</Link></li>
-                <li><Link href="/#pricing" className="text-muted-foreground hover:text-primary transition-colors">Tarifs</Link></li>
                 <li><Link href="/#contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
               </ul>
             </div>

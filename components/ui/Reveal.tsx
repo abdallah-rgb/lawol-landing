@@ -1,8 +1,7 @@
 "use client";
 
-import { motion, useInView, useAnimation, Variant } from "framer-motion";
+import { motion, useInView, useAnimation } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { cn } from "@/lib/utils";
 
 interface RevealProps {
   children: React.ReactNode;

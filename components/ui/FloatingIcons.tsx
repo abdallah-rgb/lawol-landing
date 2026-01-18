@@ -2,82 +2,73 @@
 
 import { motion } from "framer-motion";
 import { Settings, Wrench, Disc, CircleDashed, Hammer, Gauge } from "lucide-react";
-import { useEffect, useState } from "react";
 
 const icons = [
-  Settings,     // Gear
-  Wrench,       // Tool
-  Disc,         // Brake Disc
-  CircleDashed, // Tire/Wheel
-  Hammer,       // Repair
-  Gauge,        // Speedometer/Pressure
+  Settings,
+  Wrench,
+  Disc,
+  CircleDashed,
+  Hammer,
+  Gauge,
 ];
+
+const floatingIconConfigs = Array.from({ length: 25 }, () => ({
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: 40 + Math.random() * 60,
+  duration: 20 + Math.random() * 20,
+  delay: Math.random() * 5,
+}));
 
 interface FloatingIconsProps {
   className?: string;
 }
 
 export function FloatingIcons({ className }: FloatingIconsProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
     <div className={`fixed inset-0 overflow-hidden pointer-events-none z-0 ${className}`}>
-      {/* Generate multiple floating icons */}
-      {[...Array(25)].map((_, i) => {
+      {floatingIconConfigs.map((config, i) => {
         const Icon = icons[i % icons.length];
-        const randomX = Math.random() * 100; // 0-100%
-        const randomY = Math.random() * 100; // 0-100%
-        const randomSize = 40 + Math.random() * 60; // 40-100px (Larger)
-        const randomDuration = 20 + Math.random() * 20; // 20-40s
-        const randomDelay = Math.random() * 5;
-        
-        // Alterner entre couleur primaire et variantes pour plus de profondeur
         const colorClass = i % 2 === 0 ? "text-primary/10" : "text-primary/5";
 
         return (
           <motion.div
             key={i}
             className={`absolute ${colorClass}`}
-            initial={{ 
-              x: `${randomX}%`, 
-              y: `${randomY}%`,
+            initial={{
+              x: `${config.x}%`,
+              y: `${config.y}%`,
               opacity: 0,
               scale: 0.5,
-              rotate: 0 
+              rotate: 0,
             }}
-            animate={{ 
+            animate={{
               y: [
-                `${randomY}%`, 
-                `${(randomY + 30) % 100}%`, // Move down/up
-                `${randomY}%`
+                `${config.y}%`,
+                `${(config.y + 30) % 100}%`,
+                `${config.y}%`,
               ],
               x: [
-                `${randomX}%`,
-                `${(randomX + 10) % 100}%`,
-                `${randomX}%`
+                `${config.x}%`,
+                `${(config.x + 10) % 100}%`,
+                `${config.x}%`,
               ],
               rotate: [0, 180, 360],
-              opacity: [0.2, 0.4, 0.2], // Increased opacity
-              scale: [0.8, 1.1, 0.8]
+              opacity: [0.2, 0.4, 0.2],
+              scale: [0.8, 1.1, 0.8],
             }}
             transition={{
-              duration: randomDuration,
+              duration: config.duration,
               repeat: Infinity,
               ease: "linear",
-              delay: randomDelay,
+              delay: config.delay,
             }}
             style={{
               left: 0,
               top: 0,
             }}
           >
-            <Icon size={randomSize} />
+            <Icon size={config.size} />
           </motion.div>
         );
       })}
