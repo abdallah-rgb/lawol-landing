@@ -13,11 +13,11 @@ const navLinks = [
   { name: "Contact", href: "/#contact" },
 ];
 
-export function Navbar() {
+export function Navbar({ className }: { className?: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className={cn("sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60", className)}>
       <div className="container mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
         <Link href="/" className="text-2xl font-bold text-primary">
           lAwôl

@@ -47,7 +47,7 @@ export function CTA() {
                     className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full bg-white border-2 border-white px-8 py-4 font-bold text-primary transition-all duration-300 hover:bg-transparent hover:text-white hover:scale-105 hover:shadow-xl"
                   >
                     <span className="relative z-10 flex items-center gap-2">
-                      S'inscrire
+                      S&apos;inscrire
                       <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                     </span>
                   </button>

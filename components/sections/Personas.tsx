@@ -81,7 +81,7 @@ export function Personas() {
                 <div className="absolute top-0 right-0 -mt-20 -mr-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
                 
                 <p className="mb-6 text-muted-foreground text-lg md:text-xl relative z-10 leading-relaxed">
-                  Garagistes, gestionnaires de flotte ? Utilisez l'IA pour sécuriser vos commandes et réduire les immobilisations.
+                  Garagistes, gestionnaires de flotte ? Utilisez l&apos;IA pour sécuriser vos commandes et réduire les immobilisations.
                 </p>
                 <ul className="space-y-3 text-muted-foreground relative z-10">
                   <li className="flex items-center gap-2">
@@ -90,11 +90,11 @@ export function Personas() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-primary" />
-                    Réduction des erreurs d'identification
+                    Réduction des erreurs d&apos;identification
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-primary" />
-                    Optimisation des coûts d'achat
+                    Optimisation des coûts d&apos;achat
                   </li>
                 </ul>
               </div>

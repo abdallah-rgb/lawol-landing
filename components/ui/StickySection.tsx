@@ -21,7 +21,7 @@ export function StickySection({ children, className = "", index = 0 }: StickySec
 
   // Scale down slightly and fade as it gets covered
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.6]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 1]); // Keep opacity at 1 to prevent transparency
 
   return (
     <div 
@@ -31,7 +31,7 @@ export function StickySection({ children, className = "", index = 0 }: StickySec
       <motion.div 
         ref={ref}
         style={{ scale, opacity }}
-        className="relative w-full h-full flex flex-col justify-center"
+        className={`relative w-full h-full flex flex-col justify-center ${className}`}
       >
         {children}
       </motion.div>

@@ -11,11 +11,68 @@ interface IntroOverlayProps {
 
 const icons = [Settings, Gauge, Wrench, Disc, CircleDashed];
 
+function ClientOnlyIcons() {
+  const [items, setItems] = useState<Array<{
+    x: string;
+    y: string;
+    yAnim: number;
+    duration: number;
+    size: number;
+  }>>([]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setItems([...Array(15)].map(() => ({
+      x: Math.random() * 100 + "%",
+      y: Math.random() * 100 + "%",
+      yAnim: Math.random() * -100,
+      duration: 5 + Math.random() * 5,
+      size: 30 + Math.random() * 50,
+    })));
+  }, []);
+
+  if (items.length === 0) return null;
+
+  return (
+    <>
+      {items.map((item, i) => {
+        const Icon = icons[i % icons.length];
+        return (
+          <motion.div
+            key={i}
+            className="absolute text-primary"
+            initial={{
+              x: item.x,
+              y: item.y,
+              scale: 0.5,
+              opacity: 0,
+            }}
+            animate={{
+              y: [null, item.yAnim],
+              opacity: [0, 0.5, 0],
+            }}
+            transition={{
+              duration: item.duration,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          >
+            <Icon size={item.size} />
+          </motion.div>
+        );
+      })}
+    </>
+  );
+}
+
 export function IntroOverlay({ onComplete }: IntroOverlayProps) {
   const [isStarting, setIsStarting] = useState(false);
 
   // Lock scroll when intro is visible
   useEffect(() => {
+    // Only access document on client side
+    if (typeof window === "undefined") return;
+    
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "unset";
@@ -36,34 +93,9 @@ export function IntroOverlay({ onComplete }: IntroOverlayProps) {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.5 } }}
     >
-      {/* Background Animated Parts (Subtle) */}
+      {/* Background Animated Parts (Subtle) - Wrapped in client-only check to avoid hydration mismatch with random values */}
       <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
-        {[...Array(15)].map((_, i) => {
-          const Icon = icons[i % icons.length];
-          return (
-            <motion.div
-              key={i}
-              className="absolute text-primary"
-              initial={{
-                x: Math.random() * 100 + "%",
-                y: Math.random() * 100 + "%",
-                scale: 0.5,
-                opacity: 0,
-              }}
-              animate={{
-                y: [null, Math.random() * -100],
-                opacity: [0, 0.5, 0],
-              }}
-              transition={{
-                duration: 5 + Math.random() * 5,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            >
-              <Icon size={30 + Math.random() * 50} />
-            </motion.div>
-          );
-        })}
+        <ClientOnlyIcons />
       </div>
 
       <div className="relative z-10 flex flex-col items-center gap-12 w-full max-w-2xl px-4">

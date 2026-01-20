@@ -10,7 +10,10 @@ import type {
   Scene,
   Vector3,
   WebGLRenderer,
+  Object3D,
 } from "three";
+import type { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import type { GLTFLoader, GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 type ThreePreviewProps = {
   modelUrl: string;
@@ -19,8 +22,6 @@ type ThreePreviewProps = {
 };
 
 type ThreeModule = typeof import("three");
-type OrbitControlsType = typeof import("three/examples/jsm/controls/OrbitControls").OrbitControls;
-type GLTFLoaderType = typeof import("three/examples/jsm/loaders/GLTFLoader").GLTFLoader;
 
 export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: ThreePreviewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -29,16 +30,16 @@ export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: Thr
     let renderer: WebGLRenderer | null = null;
     let scene: Scene | null = null;
     let camera: PerspectiveCamera | null = null;
-    let controls: OrbitControlsType | null = null;
+    let controls: OrbitControls | null = null;
     let model: Group | null = null;
     let frameId: number | null = null;
-    let loader: GLTFLoaderType | null = null;
+    let loader: GLTFLoader | null = null;
     let cancelled = false;
 
     async function init() {
       const THREE: ThreeModule = await import("three");
-      const { OrbitControls } = await import("three/examples/jsm/controls/OrbitControls");
-      const { GLTFLoader } = await import("three/examples/jsm/loaders/GLTFLoader");
+      const { OrbitControls: OrbitControlsClass } = await import("three/examples/jsm/controls/OrbitControls");
+      const { GLTFLoader: GLTFLoaderClass } = await import("three/examples/jsm/loaders/GLTFLoader");
 
       if (!containerRef.current || cancelled) return;
 
@@ -70,7 +71,7 @@ export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: Thr
       dir.position.set(3, 5, 5);
       scene.add(dir);
 
-      controls = new OrbitControls(camera, renderer.domElement);
+      controls = new OrbitControlsClass(camera, renderer.domElement);
       controls.enableZoom = false;
       controls.enablePan = false;
       controls.enableDamping = true;
@@ -79,7 +80,7 @@ export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: Thr
       controls.minPolarAngle = Math.PI / 4;
       controls.maxPolarAngle = (3 * Math.PI) / 4;
 
-      loader = new GLTFLoader();
+      loader = new GLTFLoaderClass();
       loadModel(modelUrl, THREE);
 
       function handleResize() {
@@ -112,16 +113,33 @@ export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: Thr
       if (!loader || !scene) return;
       loader.load(
         url,
-        (gltf) => {
+        (gltf: GLTF) => {
           if (model) {
-            scene.remove(model);
+            scene!.remove(model);
           }
           model = gltf.scene;
-          scene.add(model);
+          scene!.add(model);
           centerAndScaleModel(model, THREE);
         },
         undefined,
-        () => {}
+        (error: unknown) => {
+          console.warn("Failed to load 3D model:", url, error);
+          // Fallback: Add a placeholder sphere if model fails to load
+          if (model) {
+            scene!.remove(model);
+          }
+          const geometry = new THREE.SphereGeometry(1, 32, 32);
+          const material = new THREE.MeshStandardMaterial({ 
+            color: 0xcccccc, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.5 
+          });
+          model = new THREE.Group();
+          const mesh = new THREE.Mesh(geometry, material);
+          model.add(mesh);
+          scene!.add(model);
+        }
       );
     }
 
@@ -148,7 +166,7 @@ export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: Thr
         window.cancelAnimationFrame(frameId);
       }
       if (scene) {
-        scene.traverse((obj) => {
+        scene.traverse((obj: Object3D) => {
           const mesh = obj as {
             isMesh?: boolean;
             geometry?: { dispose: () => void };

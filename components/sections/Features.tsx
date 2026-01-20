@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ScanSearch, BrainCircuit, Fingerprint, Scale, GitMerge, Lightbulb } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -45,18 +44,21 @@ const features = [
 
 export function Features() {
   return (
-    <section id="features" className="bg-bg-alt py-16 lg:py-0 lg:h-full lg:flex lg:items-center transition-colors duration-300">
+    <section id="features" className="bg-muted/30 py-16 lg:py-0 lg:h-full lg:flex lg:items-center transition-colors duration-300">
       <div className="container mx-auto max-w-7xl px-4 md:px-6">
         <div className="mb-10 lg:mb-12 text-center">
           <Reveal width="100%" delay={0.1}>
             <h2 className="text-3xl font-extrabold text-foreground md:text-5xl tracking-tight">
-              Le changement de paradigme
+              Une identification standardisée, assistée par l&apos;intelligence artificielle.
             </h2>
           </Reveal>
           <Reveal width="100%" delay={0.25}>
-            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Ce n’est plus le véhicule qui est au centre, c’est la pièce.
-            </p>
+            <div className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto space-y-1">
+              <p>Ce n&apos;est plus le véhicule qui est au centre, c&apos;est la pièce.</p>
+              <p className="text-sm md:text-base">
+                L&apos;utilisateur valide sa compréhension. lAwôl redirige vers les canaux de vente. L&apos;IA n&apos;impose pas une vérité, elle sécurise la décision.
+              </p>
+            </div>
           </Reveal>
         </div>
 

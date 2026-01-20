@@ -61,14 +61,22 @@ export default function ResultsPage() {
   const allHelpClosed = !showStep1 && !showStep2 && !showStep3;
 
   useEffect(() => {
+    // Only access window/localStorage on client side
     if (typeof window === "undefined") return;
-    const step1Seen = window.localStorage.getItem("lawol_results_tour_step1");
-    const step2Seen = window.localStorage.getItem("lawol_results_tour_step2");
-    const step3Seen = window.localStorage.getItem("lawol_results_tour_step3");
+    
+    // Wrap in a try-catch to be safe
+    try {
+      const step1Seen = window.localStorage.getItem("lawol_results_tour_step1");
+      const step2Seen = window.localStorage.getItem("lawol_results_tour_step2");
+      const step3Seen = window.localStorage.getItem("lawol_results_tour_step3");
 
-    if (step1Seen === "1") setShowStep1(false);
-    if (step2Seen === "1") setShowStep2(false);
-    if (step3Seen === "1") setShowStep3(false);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (step1Seen === "1") setShowStep1(false);
+      if (step2Seen === "1") setShowStep2(false);
+      if (step3Seen === "1") setShowStep3(false);
+    } catch (e) {
+      console.warn("Failed to access localStorage:", e);
+    }
   }, []);
 
   const dismissStep1 = () => {
@@ -119,7 +127,7 @@ export default function ResultsPage() {
               </h1>
               <p className="mt-2 text-sm md:text-base text-muted-foreground max-w-xl">
                 lAwôl identifie la bonne pièce, agrège les équivalences et vous
-                montre où l'acheter chez nos partenaires.
+                montre où l&apos;acheter chez nos partenaires.
               </p>
             </div>
           </Reveal>
@@ -175,38 +183,41 @@ export default function ResultsPage() {
                   </select>
                 </div>
 
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md hover:bg-primary/90 hover:shadow-lg transition-colors"
-                >
-                  Afficher cet exemple
-                </button>
-              </form>
-
-              {showStep1 && (
-                <motion.div
-                  className="absolute -top-20 right-0 max-w-xs rounded-2xl border border-primary/50 bg-primary px-4 py-3 text-xs text-primary-foreground shadow-xl"
-                  initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <div className="mb-1 inline-flex items-center rounded-full bg-primary-foreground/20 px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
-                    Étape 1
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <p className="flex-1">
-                      Sélectionnez le véhicule et le type de pièce. Cet exemple est pré-rempli.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={dismissStep1}
-                      className="ml-1 text-[10px] font-semibold text-primary-foreground/80 hover:text-primary-foreground"
+                <div className="relative">
+                  <button
+                    type="submit"
+                    className="w-full inline-flex items-center justify-center rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md hover:bg-primary/90 hover:shadow-lg transition-colors"
+                  >
+                    Afficher cet exemple
+                  </button>
+                  {showStep1 && (
+                    <motion.div
+                      className="absolute bottom-full mb-4 right-0 z-50 w-64 rounded-2xl border border-primary/50 bg-primary px-4 py-3 text-xs text-primary-foreground shadow-xl"
+                      initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     >
-                      OK
-                    </button>
-                  </div>
-                </motion.div>
-              )}
+                      <div className="mb-1 inline-flex items-center rounded-full bg-primary-foreground/20 px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
+                        Étape 1
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <p className="flex-1">
+                          Sélectionnez le véhicule et le type de pièce. Cet exemple est pré-rempli.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={dismissStep1}
+                          className="ml-1 text-[10px] font-semibold text-primary-foreground/80 hover:text-primary-foreground"
+                        >
+                          OK
+                        </button>
+                      </div>
+                      {/* Arrow */}
+                      <div className="absolute -bottom-1.5 right-8 h-3 w-3 rotate-45 border-b border-r border-primary/50 bg-primary" />
+                    </motion.div>
+                  )}
+                </div>
+              </form>
             </div>
           </Reveal>
         </div>
@@ -304,12 +315,11 @@ export default function ResultsPage() {
                       <ThreePreview modelUrl={partModelUrl} autoRotateSpeed={0.5} className="h-full w-full" />
                     </div>
                   </div>
-                </div>
-
+                
                 {showStep2 && (
                   <motion.div
-                    className="absolute -top-16 right-6 max-w-xs rounded-2xl border border-primary/50 bg-primary px-4 py-3 text-xs text-primary-foreground shadow-xl"
-                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                    className="absolute top-4 right-4 z-50 max-w-xs w-64 rounded-2xl border border-primary/50 bg-primary px-4 py-3 text-xs text-primary-foreground shadow-xl"
+                    initial={{ opacity: 0, y: -8, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
                   >
@@ -331,6 +341,7 @@ export default function ResultsPage() {
                   </motion.div>
                 )}
               </div>
+              </div>
             </Reveal>
 
             <Reveal width="100%" delay={0.25}>
@@ -350,7 +361,7 @@ export default function ResultsPage() {
 
                 {showStep3 && (
                   <motion.div
-                    className="absolute -top-16 right-0 max-w-xs rounded-2xl border border-primary/50 bg-primary px-4 py-3 text-xs text-primary-foreground shadow-xl"
+                    className="absolute bottom-full mb-2 right-0 z-50 max-w-xs w-64 rounded-2xl border border-primary/50 bg-primary px-4 py-3 text-xs text-primary-foreground shadow-xl"
                     initial={{ opacity: 0, y: 8, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.5, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
@@ -370,6 +381,8 @@ export default function ResultsPage() {
                         OK
                       </button>
                     </div>
+                    {/* Arrow */}
+                    <div className="absolute -bottom-1.5 right-6 h-3 w-3 rotate-45 border-b border-r border-primary/50 bg-primary" />
                   </motion.div>
                 )}
               </div>
@@ -439,7 +452,7 @@ export default function ResultsPage() {
                   Comment lire cet écran ?
                 </p>
                 <h2 className="mt-3 text-base md:text-lg font-semibold">
-                  lAwôl est une couche d'intelligence, pas une boutique.
+                  lAwôl est une couche d&apos;intelligence, pas une boutique.
                 </h2>
                 <ul className="mt-3 space-y-2 text-xs md:text-sm text-muted-foreground">
                   <li>• Nous unifions les données pièces (CPN, OEM, équivalents).</li>
@@ -462,7 +475,7 @@ export default function ResultsPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">parts_variant & interchange</p>
-                    <p>MPN, équivalences, statut d'interchange et score de confiance.</p>
+                    <p>MPN, équivalences, statut d&apos;interchange et score de confiance.</p>
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">fitment</p>
@@ -474,7 +487,7 @@ export default function ResultsPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">affiliate_clicks</p>
-                    <p>Suivi des clics sortants pour optimiser l'algorithme, jamais de panier interne.</p>
+                    <p>Suivi des clics sortants pour optimiser l&apos;algorithme, jamais de panier interne.</p>
                   </div>
                 </div>
               </div>
@@ -491,7 +504,7 @@ export default function ResultsPage() {
           onClick={resetHelps}
           className="fixed bottom-4 right-4 z-40 inline-flex items-center rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-lg hover:bg-primary/90"
         >
-          Afficher l'aide
+          Afficher l&apos;aide
         </button>
       )}
     </main>

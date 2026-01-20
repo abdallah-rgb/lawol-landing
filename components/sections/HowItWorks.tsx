@@ -1,7 +1,6 @@
 "use client";
 
 import { ScanLine, Layers, MousePointerClick } from "lucide-react";
-import { motion } from "framer-motion";
 import { Reveal } from "@/components/ui/Reveal";
 
 const steps = [
@@ -24,20 +23,18 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-16 md:py-20 lg:py-0 lg:h-full lg:flex lg:items-center bg-background transition-colors duration-300">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="mb-12 md:mb-16 text-center">
-          <Reveal width="100%" delay={0.1}>
-            <h2 className="text-3xl font-extrabold text-foreground md:text-5xl tracking-tight">
+    <section id="how-it-works" className="py-16 md:py-20 lg:py-0 lg:h-full lg:flex lg:items-center bg-background transition-colors duration-300 relative z-20">
+      <div className="container mx-auto px-4 md:px-6 relative z-30">
+        <Reveal width="100%" delay={0.1}>
+          <div className="mb-12 md:mb-16 rounded-3xl bg-card border border-border p-8 md:p-10 text-center shadow-sm">
+            <h2 className="text-3xl font-extrabold text-foreground md:text-5xl tracking-tight mb-4">
               Comment ça marche ?
             </h2>
-          </Reveal>
-          <Reveal width="100%" delay={0.25}>
-            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Identification multi-entrées. Compréhension assistée. Écran Résultats unique, quel que soit le point de départ.
             </p>
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
 
         <div className="grid gap-6 md:grid-cols-3 relative z-10">
           {steps.map((step, index) => (

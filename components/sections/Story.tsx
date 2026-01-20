@@ -7,7 +7,7 @@ import { Globe2, HeartHandshake, Lightbulb } from "lucide-react";
 
 export function Story() {
   return (
-    <section className="py-16 md:py-20 bg-background transition-colors duration-300 relative overflow-hidden lg:h-full lg:flex lg:items-center">
+    <section className="py-16 md:py-20 lg:pb-32 bg-background transition-colors duration-300 relative overflow-hidden lg:h-full lg:flex lg:items-center">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-5">
         <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-primary blur-3xl" />
@@ -27,7 +27,7 @@ export function Story() {
 
             <Reveal width="100%" delay={0.2}>
               <h2 className="text-3xl md:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
-                Né d'un constat terrain, <br />
+                Né d&apos;un constat terrain, <br />
                 <span className="text-primary">conçu pour le monde.</span>
               </h2>
             </Reveal>
@@ -35,16 +35,17 @@ export function Story() {
             <Reveal width="100%" delay={0.4}>
               <div className="space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  Aujourd’hui, acheter un vêtement en ligne est simple. La plateforme absorbe la complexité. 
-                  En revanche, <strong className="text-foreground">acheter une pièce automobile reste un défi technique</strong>.
+                  Aujourd&apos;hui, dans de nombreux secteurs du e-commerce, la complexité a été absorbée par la plateforme. Acheter un vêtement en ligne ne nécessite ni expertise ni accompagnement : le système guide le choix et réduit le risque d&apos;erreur.
                 </p>
                 <p>
-                  lAwôl est né d'une expérience terrain en <strong>Afrique</strong>, où une simple erreur d’identification pouvait immobiliser un véhicule pendant des semaines. Nous avons vite compris que ce problème était universel.
+                  À l&apos;inverse, l&apos;achat de pièces automobiles repose encore largement sur l&apos;expertise de l&apos;utilisateur. Identifier correctement une pièce nécessite souvent la maîtrise des références, la compréhension des compatibilités et parfois la validation d&apos;un professionnel pour éviter l&apos;erreur.
                 </p>
                 <p>
-                  Le problème n’est pas l’utilisateur, c'est l'absence d'outil.
-                  <br />
-                  <span className="italic text-primary/80">"Nous ne vendons pas de pièces. Nous sommes la couche d'intelligence qui aide à choisir."</span>
+                  Cette complexité a un impact direct sur la performance du marché. Elle se traduit par des erreurs de référence, des retours produits coûteux, des litiges évitables et un frein aux commandes internationales, notamment pour les particuliers et les garages indépendants.
+                </p>
+                <p>
+                  <span className="block">👉 Le problème n&apos;est pas l&apos;utilisateur.</span>
+                  <span className="block">👉 Le problème est l&apos;absence d&apos;un outil capable d&apos;absorber la complexité de l&apos;identification et de sécuriser la décision avant l&apos;achat.</span>
                 </p>
               </div>
             </Reveal>
@@ -57,7 +58,7 @@ export function Story() {
                   </div>
                   <div>
                     <h4 className="font-bold text-foreground mb-1 text-base">Expertise Digitale</h4>
-                    <p className="text-xs text-muted-foreground">Plus besoin d'être mécanicien pour trouver la bonne pièce.</p>
+                    <p className="text-xs text-muted-foreground">Plus besoin d&apos;être mécanicien pour trouver la bonne pièce.</p>
                   </div>
                 </div>
                 <div className="flex gap-3 items-start">
@@ -86,8 +87,8 @@ export function Story() {
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
                 
                 <div className="absolute bottom-6 left-6 right-6 text-foreground">
-                  <p className="text-xl font-bold mb-1">"L'ambition est globale."</p>
-                  <p className="text-sm text-muted-foreground">Utile pour l'utilisateur, créateur de valeur pour le marché.</p>
+                  <p className="text-xl font-bold mb-1">&quot;L&apos;ambition est globale.&quot;</p>
+                  <p className="text-sm text-muted-foreground">Utile pour l&apos;utilisateur, créateur de valeur pour le marché.</p>
                 </div>
               </div>
               
@@ -98,9 +99,13 @@ export function Story() {
                 transition={{ delay: 0.8 }}
                 className="absolute -bottom-6 -right-6 bg-card p-5 rounded-xl shadow-xl border border-border max-w-xs hidden md:block"
               >
-                <p className="text-sm font-medium italic text-muted-foreground">
-                  "lAwôl permet d’acheter une pièce auto comme on achète un vêtement : sans être expert."
+                <p className="text-xs text-muted-foreground italic">
+                  &quot;En Afrique, 80% des pièces sont achetées après une inspection physique. lAwôl digitalise cette confiance.&quot;
                 </p>
+                <div className="flex items-center gap-2 mt-3">
+                  <div className="w-6 h-6 rounded-full bg-primary" />
+                  <span className="text-xs font-bold text-foreground">Founder</span>
+                </div>
               </motion.div>
             </div>
           </Reveal>

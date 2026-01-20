@@ -8,8 +8,8 @@ import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { Problems } from "@/components/sections/Problems";
 import { HowItWorks } from "@/components/sections/HowItWorks";
+import { WhereItIntervenes } from "@/components/sections/WhereItIntervenes";
 import { Features } from "@/components/sections/Features";
-import { Testimonials } from "@/components/sections/Testimonials";
 import { Story } from "@/components/sections/Story";
 import { StickySection } from "@/components/ui/StickySection";
 
@@ -17,7 +17,7 @@ export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
 
   return (
-    <main className="min-h-screen relative">
+    <main className="relative bg-background text-foreground transition-colors duration-300">
       <AnimatePresence mode="wait">
         {showIntro && <IntroOverlay onComplete={() => setShowIntro(false)} />}
       </AnimatePresence>
@@ -37,17 +37,20 @@ export default function Home() {
         <Problems />
       </StickySection>
 
-      <StickySection index={4} className="bg-muted/30">
+      <StickySection index={4} className="bg-background">
         <HowItWorks />
       </StickySection>
 
       <StickySection index={5} className="bg-background">
+        <WhereItIntervenes />
+      </StickySection>
+
+      <StickySection index={6} className="bg-background">
         <Story />
       </StickySection>
 
       {/* Normal Scroll Sections (z-index higher to cover the last sticky card) */}
-      <div className="relative z-50 bg-background shadow-[0_-20px_40px_rgba(0,0,0,0.1)]">
-        <Testimonials />
+      <div className="relative z-[100] bg-background shadow-[0_-20px_40px_rgba(0,0,0,0.1)]">
         <Footer />
       </div>
     </main>

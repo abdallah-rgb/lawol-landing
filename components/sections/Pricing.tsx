@@ -83,7 +83,7 @@ export function Pricing() {
                 href="#"
                 className="block w-full rounded-xl bg-primary py-4 text-center font-semibold text-white transition-all hover:bg-primary/90"
               >
-                S'abonner
+                S&apos;abonner
               </Link>
             </div>
           </Reveal>

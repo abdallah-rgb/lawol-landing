@@ -30,30 +30,30 @@
 
 .dark {
   /* Dark Mode - Premium Tech */
-  --background: #000000; /* Pure Black */
-  --foreground: #ededed; /* Off-white */
+  --background: #0a0a0a; /* Zinc 950 - Softer, richer black */
+  --foreground: #fafafa; /* Zinc 50 - Brighter text */
   
   /* Semantic Colors - Primary Accent */
-  --primary: #007F80; /* Brand primary color */
-  --primary-foreground: #ffffff;
+  --primary: #2dd4bf; /* Teal 400 - Brighter and more vibrant for dark mode */
+  --primary-foreground: #000000; /* Black text on bright teal for contrast */
   
-  --secondary: #ededed; /* Whiteish */
-  --secondary-foreground: #0a0a0a;
+  --secondary: #27272a; /* Zinc 800 */
+  --secondary-foreground: #fafafa;
   
-  --muted: #171717; /* Gray 900 */
-  --muted-foreground: #a3a3a3; /* Gray 400 */
+  --muted: #27272a; /* Zinc 800 */
+  --muted-foreground: #a1a1aa; /* Zinc 400 */
   
-  --accent: #171717; /* Gray 900 */
-  --accent-foreground: #ededed;
+  --accent: #27272a; /* Zinc 800 */
+  --accent-foreground: #fafafa;
   
-  --card: #171717; /* Dark Gray */
-  --card-foreground: #ededed;
+  --card: #18181b; /* Zinc 900 */
+  --card-foreground: #fafafa;
   
-  --border: #262626; /* Gray 800 */
-  --input: #262626;
+  --border: #27272a; /* Zinc 800 */
+  --input: #27272a;
   
   /* Custom specific */
-  --bg-alt: #111111; /* Slightly lighter black */
+  --bg-alt: #18181b; /* Zinc 900 */
 }
 
 @theme inline {
