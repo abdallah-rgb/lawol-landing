@@ -10,6 +10,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 const navLinks = [
   { name: "Comment ça marche", href: "/#how-it-works" },
   { name: "Fonctionnalités", href: "/#features" },
+  { name: "Espace Partenaires", href: "/#partners" },
   { name: "Contact", href: "/#contact" },
 ];
 
@@ -30,7 +31,12 @@ export function Navbar({ className }: { className?: string }) {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-sm font-medium text-foreground transition-colors hover:text-primary"
+                className={cn(
+                  "text-sm font-medium transition-colors hover:text-primary",
+                  link.name === "Espace Partenaires"
+                    ? "text-primary font-semibold"
+                    : "text-foreground"
+                )}
               >
                 {link.name}
               </Link>
@@ -64,7 +70,12 @@ export function Navbar({ className }: { className?: string }) {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-sm font-medium text-foreground transition-colors hover:text-primary"
+                  className={cn(
+                    "text-sm font-medium transition-colors hover:text-primary",
+                    link.name === "Espace Partenaires"
+                      ? "text-primary font-semibold"
+                      : "text-foreground"
+                  )}
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}

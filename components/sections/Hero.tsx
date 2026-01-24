@@ -3,10 +3,12 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Star, Rocket, ShieldCheck, ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
+import { SearchInterface } from "@/components/features/SearchInterface";
 
 export function Hero() {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -70,12 +72,12 @@ export function Hero() {
 
             <Reveal width="100%" delay={0.6}>
               <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start justify-center pt-2">
-                <Link
-                  href="/resultats"
-                  className="group relative overflow-hidden rounded-full bg-primary border-2 border-primary px-8 py-4 text-base font-bold text-primary-foreground transition-all duration-300 hover:bg-background hover:text-primary hover:scale-105 hover:shadow-xl hover:shadow-primary/20"
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="group relative overflow-hidden rounded-full bg-primary border-2 border-primary px-8 py-4 text-base font-bold text-primary-foreground transition-all duration-300 hover:bg-background hover:text-primary hover:scale-105 hover:shadow-xl hover:shadow-primary/20 cursor-pointer"
                 >
                   <span className="relative z-10">Trouver ma pièce</span>
-                </Link>
+                </button>
                 <Link
                   href="#how-it-works"
                   className="group relative overflow-hidden rounded-full bg-background border-2 border-secondary px-8 py-4 text-base font-bold text-secondary transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:scale-105 hover:shadow-xl"
@@ -179,6 +181,8 @@ export function Hero() {
           <ChevronDown className="h-6 w-6 text-muted-foreground" />
         </div>
       </div>
+      
+      <SearchInterface isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </section>
   );
 }

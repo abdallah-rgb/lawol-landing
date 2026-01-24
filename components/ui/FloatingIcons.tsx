@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Settings, Wrench, Disc, CircleDashed, Hammer, Gauge } from "lucide-react";
 
@@ -12,22 +13,29 @@ const icons = [
   Gauge,
 ];
 
-const floatingIconConfigs = Array.from({ length: 25 }, () => ({
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: 40 + Math.random() * 60,
-  duration: 20 + Math.random() * 20,
-  delay: Math.random() * 5,
-}));
-
 interface FloatingIconsProps {
   className?: string;
 }
 
 export function FloatingIcons({ className }: FloatingIconsProps) {
+  const [configs, setConfigs] = useState<any[]>([]);
+
+  useEffect(() => {
+    const newConfigs = Array.from({ length: 25 }, () => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 40 + Math.random() * 60,
+      duration: 20 + Math.random() * 20,
+      delay: Math.random() * 5,
+    }));
+    setConfigs(newConfigs);
+  }, []);
+
+  if (configs.length === 0) return null;
+
   return (
     <div className={`fixed inset-0 overflow-hidden pointer-events-none z-0 ${className}`}>
-      {floatingIconConfigs.map((config, i) => {
+      {configs.map((config, i) => {
         const Icon = icons[i % icons.length];
         const colorClass = i % 2 === 0 ? "text-primary/10" : "text-primary/5";
 

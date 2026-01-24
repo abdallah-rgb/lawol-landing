@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type {
   Box3,
   DirectionalLight,
@@ -14,6 +14,7 @@ import type {
 } from "three";
 import type { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import type { GLTFLoader, GLTF } from "three/examples/jsm/loaders/GLTFLoader";
+import type { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 
 type ThreePreviewProps = {
   modelUrl: string;
@@ -24,7 +25,10 @@ type ThreePreviewProps = {
 type ThreeModule = typeof import("three");
 
 export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: ThreePreviewProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null); // Main container
+  const mountRef = useRef<HTMLDivElement | null>(null); // Dedicated mount point for Three.js
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let renderer: WebGLRenderer | null = null;
@@ -33,165 +37,181 @@ export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: Thr
     let controls: OrbitControls | null = null;
     let model: Group | null = null;
     let frameId: number | null = null;
-    let loader: GLTFLoader | null = null;
     let cancelled = false;
 
     async function init() {
-      const THREE: ThreeModule = await import("three");
-      const { OrbitControls: OrbitControlsClass } = await import("three/examples/jsm/controls/OrbitControls");
-      const { GLTFLoader: GLTFLoaderClass } = await import("three/examples/jsm/loaders/GLTFLoader");
+      try {
+        setIsLoading(true);
+        setError(null);
+        
+        const THREE: ThreeModule = await import("three");
+        const { OrbitControls: OrbitControlsClass } = await import("three/examples/jsm/controls/OrbitControls");
+        const { GLTFLoader: GLTFLoaderClass } = await import("three/examples/jsm/loaders/GLTFLoader");
+        const { FBXLoader: FBXLoaderClass } = await import("three/examples/jsm/loaders/FBXLoader");
 
-      if (!containerRef.current || cancelled) return;
+        if (!mountRef.current || cancelled) return;
 
-      const container = containerRef.current;
-      const width = container.clientWidth || 300;
-      const height = container.clientHeight || Math.round(width * 0.75);
+        const container = mountRef.current;
+        const width = container.clientWidth || 300;
+        const height = container.clientHeight || Math.round(width * 0.75);
 
-      renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true,
-      });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(width, height, false);
-      renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer = new THREE.WebGLRenderer({
+          antialias: true,
+          alpha: true,
+          preserveDrawingBuffer: true, // Helpful for debugging and screenshots
+        });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(width, height, false);
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-      container.innerHTML = "";
-      container.appendChild(renderer.domElement);
-
-      scene = new THREE.Scene();
-
-      camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 100);
-      camera.position.set(0, 1.5, 4);
-
-      const hemi: HemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
-      hemi.position.set(0, 1, 0);
-      scene.add(hemi);
-
-      const dir: DirectionalLight = new THREE.DirectionalLight(0xffffff, 1);
-      dir.position.set(3, 5, 5);
-      scene.add(dir);
-
-      controls = new OrbitControlsClass(camera, renderer.domElement);
-      controls.enableZoom = false;
-      controls.enablePan = false;
-      controls.enableDamping = true;
-      controls.autoRotate = true;
-      controls.autoRotateSpeed = autoRotateSpeed;
-      controls.minPolarAngle = Math.PI / 4;
-      controls.maxPolarAngle = (3 * Math.PI) / 4;
-
-      loader = new GLTFLoaderClass();
-      loadModel(modelUrl, THREE);
-
-      function handleResize() {
-        if (!container || !renderer || !camera) return;
-        const newWidth = container.clientWidth;
-        const newHeight = container.clientHeight || Math.round(newWidth * 0.75);
-        renderer.setSize(newWidth, newHeight, false);
-        camera.aspect = newWidth / newHeight;
-        camera.updateProjectionMatrix();
-      }
-
-      function animate() {
-        if (cancelled) return;
-        if (!controls || !renderer || !scene || !camera) return;
-        controls.update();
-        renderer.render(scene, camera);
-        frameId = window.requestAnimationFrame(animate);
-      }
-
-      window.addEventListener("resize", handleResize);
-      handleResize();
-      animate();
-
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-
-    function loadModel(url: string, THREE: ThreeModule) {
-      if (!loader || !scene) return;
-      loader.load(
-        url,
-        (gltf: GLTF) => {
-          if (model) {
-            scene!.remove(model);
-          }
-          model = gltf.scene;
-          scene!.add(model);
-          centerAndScaleModel(model, THREE);
-        },
-        undefined,
-        (error: unknown) => {
-          console.warn("Failed to load 3D model:", url, error);
-          // Fallback: Add a placeholder sphere if model fails to load
-          if (model) {
-            scene!.remove(model);
-          }
-          const geometry = new THREE.SphereGeometry(1, 32, 32);
-          const material = new THREE.MeshStandardMaterial({ 
-            color: 0xcccccc, 
-            wireframe: true,
-            transparent: true,
-            opacity: 0.5 
-          });
-          model = new THREE.Group();
-          const mesh = new THREE.Mesh(geometry, material);
-          model.add(mesh);
-          scene!.add(model);
+        // Clear container safely
+        while (container.firstChild) {
+          container.removeChild(container.firstChild);
         }
-      );
-    }
+        container.appendChild(renderer.domElement);
 
-    function centerAndScaleModel(object: Group, THREE: ThreeModule) {
-      const box: Box3 = new THREE.Box3().setFromObject(object);
-      const size: Vector3 = new THREE.Vector3();
-      box.getSize(size);
-      const center: Vector3 = new THREE.Vector3();
-      box.getCenter(center);
+        scene = new THREE.Scene();
 
-      object.position.sub(center);
+        camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+        camera.position.set(2, 1.5, 4);
 
-      const maxDim = Math.max(size.x, size.y, size.z);
-      const targetSize = 2;
-      const scale = maxDim > 0 ? targetSize / maxDim : 1;
-      object.scale.setScalar(scale);
+        // Lighting setup
+        const ambientLight = new THREE.AmbientLight(0xffffff, 2);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 3);
+        dirLight.position.set(5, 10, 7);
+        scene.add(dirLight);
+
+        const backLight = new THREE.DirectionalLight(0xffffff, 1);
+        backLight.position.set(-5, 5, -5);
+        scene.add(backLight);
+
+        controls = new OrbitControlsClass(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.enableZoom = true;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = autoRotateSpeed;
+
+        // Load Model
+        const gltfLoader = new GLTFLoaderClass();
+        const fbxLoader = new FBXLoaderClass();
+
+        const onLoad = (object: GLTF | Group) => {
+          if (cancelled || !scene) return;
+
+          let loadedModel: Group;
+          if ((object as GLTF).scene) {
+            loadedModel = (object as GLTF).scene;
+          } else {
+            loadedModel = object as Group;
+          }
+
+          model = loadedModel;
+          scene.add(model);
+          
+          // Center and Scale
+          const box = new THREE.Box3().setFromObject(model);
+          const size = new THREE.Vector3();
+          box.getSize(size);
+          const center = new THREE.Vector3();
+          box.getCenter(center);
+
+          model.position.sub(center); // Center at 0,0,0
+
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const scale = maxDim > 0 ? 3 / maxDim : 1; // Scale to fit within ~3 units
+          model.scale.setScalar(scale);
+
+          setIsLoading(false);
+        };
+
+        const onProgress = (xhr: ProgressEvent) => {
+          // console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        };
+
+        const onError = (err: unknown) => {
+          console.error("Error loading model:", err);
+          setError("Erreur chargement 3D");
+          setIsLoading(false);
+        };
+
+        if (modelUrl.toLowerCase().endsWith(".fbx")) {
+          fbxLoader.load(modelUrl, onLoad, onProgress, onError);
+        } else {
+          gltfLoader.load(modelUrl, onLoad, onProgress, onError);
+        }
+
+        function animate() {
+          if (cancelled) return;
+          frameId = requestAnimationFrame(animate);
+          if (controls) controls.update();
+          if (renderer && scene && camera) renderer.render(scene, camera);
+        }
+        
+        animate();
+
+        // Resize handler
+        const handleResize = () => {
+          if (!container || !renderer || !camera) return;
+          const w = container.clientWidth;
+          const h = container.clientHeight;
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h, false);
+        };
+
+        window.addEventListener("resize", handleResize);
+        // Initial resize check
+        handleResize();
+
+        // Cleanup listener
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        }
+
+      } catch (err) {
+        console.error("ThreePreview init error:", err);
+        setError("Erreur init 3D");
+        setIsLoading(false);
+      }
     }
 
     init();
 
     return () => {
       cancelled = true;
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId);
-      }
-      if (scene) {
-        scene.traverse((obj: Object3D) => {
-          const mesh = obj as {
-            isMesh?: boolean;
-            geometry?: { dispose: () => void };
-            material?:
-              | { dispose: () => void }
-              | Array<{ dispose: () => void }>
-              | undefined;
-          };
-          if (mesh.isMesh) {
-            if (mesh.geometry) mesh.geometry.dispose();
-            if (mesh.material) {
-              if (Array.isArray(mesh.material)) {
-                mesh.material.forEach((m) => m.dispose());
-              } else {
-                mesh.material.dispose();
-              }
-            }
-          }
-        });
-      }
+      if (frameId) cancelAnimationFrame(frameId);
       if (renderer) {
         renderer.dispose();
+        if (mountRef.current && renderer.domElement) {
+            // Check if child exists before removing to avoid errors
+             if(mountRef.current.contains(renderer.domElement)){
+                mountRef.current.removeChild(renderer.domElement);
+             }
+        }
+      }
+      if (model && scene) {
+          scene.remove(model);
+          // Optional: dispose geometry/materials if needed
       }
     };
   }, [modelUrl, autoRotateSpeed]);
 
-  return <div ref={containerRef} className={className} />;
+  return (
+    <div ref={containerRef} className={`relative w-full h-full ${className || ""}`}>
+      <div ref={mountRef} className="absolute inset-0 w-full h-full" />
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/5 z-10 pointer-events-none">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      )}
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center bg-red-50 z-10 text-red-500 text-xs font-bold p-2 text-center pointer-events-none">
+          {error}
+        </div>
+      )}
+    </div>
+  );
 }

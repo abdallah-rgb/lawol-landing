@@ -55,7 +55,7 @@ export function Pricing() {
           {/* Pro Plan */}
           <Reveal width="100%" delay={0.4}>
             <div className="relative overflow-hidden rounded-3xl border border-primary bg-primary/10 p-8 text-foreground shadow-2xl md:p-12 dark:bg-primary/20">
-              <div className="absolute top-0 right-0 rounded-bl-xl bg-primary px-4 py-1 text-sm font-medium text-white">
+              <div className="absolute top-0 right-0 rounded-bl-xl bg-primary px-4 py-1 text-sm font-medium text-primary-foreground">
                 Populaire
               </div>
               <h3 className="mb-4 text-3xl font-bold">Pro</h3>
@@ -81,7 +81,7 @@ export function Pricing() {
               </ul>
               <Link
                 href="#"
-                className="block w-full rounded-xl bg-primary py-4 text-center font-semibold text-white transition-all hover:bg-primary/90"
+                className="block w-full rounded-xl bg-primary py-4 text-center font-semibold text-primary-foreground transition-all hover:bg-primary/90"
               >
                 S&apos;abonner
               </Link>

@@ -1,62 +1,237 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Reveal } from "@/components/ui/Reveal";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { ArrowUpRight, ShieldCheck, BadgePercent, Shuffle } from "lucide-react";
+import { ArrowUpRight, ShieldCheck, BadgePercent, Shuffle, Car, GitMerge, Check } from "lucide-react";
 import { ThreePreview } from "@/components/ui/ThreePreview";
+import { cn } from "@/lib/utils";
 
-const offers = [
+const compatibleVehicles = [
   {
-    partner: "Partenaire OEM",
-    country: "France",
-    affiliateType: "Constructeur",
-    mpn: "OEM-123456",
-    brand: "Constructeur officiel",
-    interchangeType: "Origine constructeur",
-    confidenceScore: 0.98,
-    priceLabel: "Prix catalogue",
-    estimatedPrice: "245 €",
-    url: "#",
-    highlight: "Référence d'origine",
+    make: "Audi",
+    model: "RS6 Avant",
+    year: "2020–2024",
+    engine: "4.0 TFSI V8",
   },
   {
-    partner: "Grossiste A",
-    country: "Côte d'Ivoire",
-    affiliateType: "Distributeur",
-    mpn: "AF-789012",
-    brand: "Aftermarket Premium",
-    interchangeType: "Équivalent premium",
-    confidenceScore: 0.95,
-    priceLabel: "Prix public indicatif",
-    estimatedPrice: "185 €",
-    url: "#",
-    highlight: "Économie potentielle",
+    make: "Audi",
+    model: "RS7 Sportback",
+    year: "2020–2024",
+    engine: "4.0 TFSI V8",
   },
   {
-    partner: "Marketplace B",
-    country: "Europe",
-    affiliateType: "Marketplace",
-    mpn: "EQ-456789",
-    brand: "Équipementier",
-    interchangeType: "Équivalent validé",
-    confidenceScore: 0.91,
-    priceLabel: "Fourchette constatée",
-    estimatedPrice: "160–190 €",
-    url: "#",
-    highlight: "Plusieurs vendeurs",
+    make: "Lamborghini",
+    model: "Urus",
+    year: "2019–2024",
+    engine: "4.0 V8 Bi-Turbo",
+  },
+  {
+    make: "Porsche",
+    model: "Cayenne Turbo GT",
+    year: "2021–2024",
+    engine: "4.0 V8 Bi-Turbo",
   },
 ];
 
+const vehicleOffers: Record<string, any[]> = {
+  "RS6 Avant": [
+    {
+      partner: "Oscaro",
+      country: "France",
+      affiliateType: "Distributeur",
+      mpn: "F 026 407 116",
+      brand: "BOSCH",
+      interchangeType: "Pièce identifiée",
+      confidenceScore: 0.99,
+      priceLabel: "Prix constaté",
+      estimatedPrice: "14,90 €",
+      url: "#",
+      highlight: "Choix recommandé",
+    },
+    {
+      partner: "Autodoc",
+      country: "Allemagne",
+      affiliateType: "Distributeur",
+      mpn: "HU 7049 z",
+      brand: "MANN-FILTER",
+      interchangeType: "Équivalent validé",
+      confidenceScore: 0.98,
+      priceLabel: "Prix indicatif",
+      estimatedPrice: "18,50 €",
+      url: "#",
+      highlight: "Qualité monte d'origine",
+    },
+    {
+      partner: "Rose Passion",
+      country: "France",
+      affiliateType: "Spécialiste",
+      mpn: "06M 198 405 F",
+      brand: "VAG OEM",
+      interchangeType: "Origine",
+      confidenceScore: 1.0,
+      priceLabel: "Prix catalogue",
+      estimatedPrice: "34,00 €",
+      url: "#",
+      highlight: "Pièce Constructeur",
+    },
+  ],
+  "RS7 Sportback": [
+    {
+      partner: "Oscaro",
+      country: "France",
+      affiliateType: "Distributeur",
+      mpn: "F 026 407 116",
+      brand: "BOSCH",
+      interchangeType: "Pièce identifiée",
+      confidenceScore: 0.99,
+      priceLabel: "Prix constaté",
+      estimatedPrice: "14,90 €",
+      url: "#",
+      highlight: "Meilleur prix",
+    },
+    {
+      partner: "Mister Auto",
+      country: "France",
+      affiliateType: "Distributeur",
+      mpn: "HU 7049 z",
+      brand: "MANN-FILTER",
+      interchangeType: "Équivalent validé",
+      confidenceScore: 0.98,
+      priceLabel: "Prix indicatif",
+      estimatedPrice: "19,20 €",
+      url: "#",
+      highlight: "Disponibilité immédiate",
+    },
+    {
+      partner: "Audi DB",
+      country: "Allemagne",
+      affiliateType: "Concessionnaire",
+      mpn: "06M 198 405 F",
+      brand: "VAG OEM",
+      interchangeType: "Origine",
+      confidenceScore: 1.0,
+      priceLabel: "Prix catalogue",
+      estimatedPrice: "36,00 €",
+      url: "#",
+      highlight: "Réseau officiel",
+    },
+  ],
+  "Urus": [
+    {
+      partner: "Oscaro",
+      country: "France",
+      affiliateType: "Distributeur",
+      mpn: "F 026 407 116",
+      brand: "BOSCH",
+      interchangeType: "Même pièce (Cross-ref)",
+      confidenceScore: 0.99,
+      priceLabel: "Prix malin",
+      estimatedPrice: "14,90 €",
+      url: "#",
+      highlight: "Économie massive",
+    },
+    {
+      partner: "Autodoc",
+      country: "Allemagne",
+      affiliateType: "Distributeur",
+      mpn: "HU 7049 z",
+      brand: "MANN-FILTER",
+      interchangeType: "Équivalent validé",
+      confidenceScore: 0.98,
+      priceLabel: "Prix indicatif",
+      estimatedPrice: "22,00 €",
+      url: "#",
+      highlight: "Alternative Premium",
+    },
+    {
+      partner: "Scuderia Car Parts",
+      country: "UK/Intl",
+      affiliateType: "Spécialiste Luxe",
+      mpn: "06M 198 405 F",
+      brand: "Lamborghini OEM",
+      interchangeType: "Origine",
+      confidenceScore: 1.0,
+      priceLabel: "Prix catalogue",
+      estimatedPrice: "58,00 €",
+      url: "#",
+      highlight: "Boîte Constructeur",
+    },
+  ],
+  "Cayenne Turbo GT": [
+    {
+      partner: "Oscaro",
+      country: "France",
+      affiliateType: "Distributeur",
+      mpn: "F 026 407 116",
+      brand: "BOSCH",
+      interchangeType: "Même pièce",
+      confidenceScore: 0.99,
+      priceLabel: "Prix constaté",
+      estimatedPrice: "14,90 €",
+      url: "#",
+      highlight: "Choix rationnel",
+    },
+    {
+      partner: "Rose Passion",
+      country: "France",
+      affiliateType: "Spécialiste",
+      mpn: "OX 1234 D",
+      brand: "MAHLE",
+      interchangeType: "Monte d'origine",
+      confidenceScore: 0.99,
+      priceLabel: "Prix spécialiste",
+      estimatedPrice: "24,00 €",
+      url: "#",
+      highlight: "Fournisseur OEM",
+    },
+    {
+      partner: "Porsche Center",
+      country: "Allemagne",
+      affiliateType: "Réseau",
+      mpn: "9A7 198 405",
+      brand: "Porsche OEM",
+      interchangeType: "Origine",
+      confidenceScore: 1.0,
+      priceLabel: "Prix catalogue",
+      estimatedPrice: "45,00 €",
+      url: "#",
+      highlight: "Garantie constructeur",
+    },
+  ],
+};
+
 export default function ResultsPage() {
-  const [showStep1, setShowStep1] = useState(true);
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResultsContent />
+    </Suspense>
+  );
+}
+
+function ResultsContent() {
+  const searchParams = useSearchParams();
+  const initialVehicle = searchParams.get("vehicle") || "RS6 Avant";
+
+  const [showStep1, setShowStep1] = useState(false);
   const [showStep2, setShowStep2] = useState(true);
   const [showStep3, setShowStep3] = useState(true);
-  const [vehicleModelUrl, setVehicleModelUrl] = useState("/models/vehicles/corolla.glb");
-  const [partModelUrl] = useState("/models/parts/oil_filter.glb");
+  const [vehicleModelUrl, setVehicleModelUrl] = useState("/models/vehicles/2020_audi_rs6_avant.glb");
+  const [partModelUrl, setPartModelUrl] = useState("/models/parts/oil_filter_bosch_-_low_poly.glb");
+  const [selectedVehicle, setSelectedVehicle] = useState(initialVehicle);
+
+  useEffect(() => {
+    const vehicle = searchParams.get("vehicle");
+    if (vehicle) {
+      setSelectedVehicle(vehicle);
+    }
+  }, [searchParams]);
+  
+  const currentOffers = vehicleOffers[selectedVehicle] || vehicleOffers["RS6 Avant"];
 
   const allHelpClosed = !showStep1 && !showStep2 && !showStep3;
 
@@ -113,6 +288,9 @@ export default function ResultsPage() {
 
   return (
     <main className="flex min-h-screen flex-col bg-background text-foreground transition-colors duration-300">
+      <div className="w-full bg-primary/10 text-primary text-[10px] md:text-xs font-bold text-center py-2 uppercase tracking-widest border-b border-primary/10">
+        Démonstration — comment lAwôl sécurise l’identification avant l’achat
+      </div>
       <Navbar />
 
       <section className="border-b border-border bg-background/80 backdrop-blur">
@@ -123,14 +301,13 @@ export default function ResultsPage() {
                 Exemple de résultats
               </p>
               <h1 className="mt-3 text-2xl md:text-3xl font-extrabold tracking-tight">
-                Résultats pour un filtre à huile
+                Résultats pour une Plaquette de frein Bosch
               </h1>
               <p className="mt-2 text-sm md:text-base text-muted-foreground max-w-xl">
-                lAwôl identifie la bonne pièce, agrège les équivalences et vous
-                montre où l&apos;acheter chez nos partenaires.
-              </p>
-            </div>
-          </Reveal>
+                  L’utilisateur arrive chez le distributeur avec une pièce déjà validée sur le plan technique.
+                </p>
+              </div>
+            </Reveal>
           <Reveal width="100%" delay={0.2}>
             <div className="mt-3 md:mt-0 flex items-center gap-3 text-xs md:text-sm text-muted-foreground">
               <div className="inline-flex items-center gap-2 rounded-full bg-card px-4 py-2 border border-border">
@@ -155,15 +332,15 @@ export default function ResultsPage() {
                     Véhicule
                   </label>
                   <select
-                    defaultValue="/models/vehicles/corolla.glb"
+                    defaultValue="/models/vehicles/2020_audi_rs6_avant.glb"
                     onChange={(event) => setVehicleModelUrl(event.target.value)}
                     className="w-full rounded-2xl border border-input bg-background px-4 py-3 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                   >
-                    <option value="/models/vehicles/corolla.glb">
-                      Toyota Corolla 1.8 • 2016–2019 • Essence
+                    <option value="/models/vehicles/2020_audi_rs6_avant.glb">
+                      Audi RS6 Avant • 2020 • V8 Biturbo
                     </option>
                     <option value="/models/vehicles/placeholder.glb" disabled>
-                      Autres modèles à venir
+                      Lamborghini Urus, RS7...
                     </option>
                   </select>
                 </div>
@@ -176,9 +353,10 @@ export default function ResultsPage() {
                     defaultValue="oil_filter"
                     className="w-full rounded-2xl border border-input bg-background px-4 py-3 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                   >
-                    <option value="oil_filter">Filtre à huile moteur</option>
+                    <option value="oil_filter">Filtre à Huile (Bosch)</option>
+                    <option value="pads" disabled>Plaquettes Avant</option>
                     <option value="placeholder" disabled>
-                      Freinage, filtres, bougies...
+                      Bougies, capteurs...
                     </option>
                   </select>
                 </div>
@@ -202,7 +380,7 @@ export default function ResultsPage() {
                       </div>
                       <div className="flex items-start gap-2">
                         <p className="flex-1">
-                          Sélectionnez le véhicule et le type de pièce. Cet exemple est pré-rempli.
+                          Simulation : Définissez le contexte véhicule/pièce. En conditions réelles, l'IA lAwôl détecte ces infos instantanément.
                         </p>
                         <button
                           type="button"
@@ -216,6 +394,12 @@ export default function ResultsPage() {
                       <div className="absolute -bottom-1.5 right-8 h-3 w-3 rotate-45 border-b border-r border-primary/50 bg-primary" />
                     </motion.div>
                   )}
+                </div>
+                <div className="mt-2 h-48 md:h-56 w-full rounded-3xl border border-border/50 bg-neutral-100 shadow-sm overflow-hidden md:col-start-1 md:row-start-2 self-start">
+                  <ThreePreview modelUrl={vehicleModelUrl} autoRotateSpeed={0.5} className="h-full w-full mix-blend-multiply" />
+                </div>
+                <div className="mt-2 h-48 md:h-56 w-full rounded-3xl border border-border/50 bg-neutral-100 shadow-sm overflow-hidden md:col-start-2 md:row-start-2 self-start">
+                   <ThreePreview modelUrl={partModelUrl} autoRotateSpeed={0.5} className="h-full w-full mix-blend-multiply" />
                 </div>
               </form>
             </div>
@@ -234,7 +418,7 @@ export default function ResultsPage() {
                   animate={{ opacity: 1, scale: [1, 1.06, 1], y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  1. Vérifier que la description de la pièce correspond à votre besoin.
+                  1. Identification univoque (CPN) et validation technique.
                 </motion.span>
                 <motion.span
                   className="inline-flex items-center rounded-full bg-muted px-3 py-1"
@@ -242,7 +426,7 @@ export default function ResultsPage() {
                   animate={{ opacity: 1, scale: [1, 1.06, 1], y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  2. Comparer les options chez les partenaires.
+                  2. Révélation de la standardisation industrielle.
                 </motion.span>
                 <motion.span
                   className="inline-flex items-center rounded-full bg-muted px-3 py-1"
@@ -250,7 +434,7 @@ export default function ResultsPage() {
                   animate={{ opacity: 1, scale: [1, 1.06, 1], y: 0 }}
                   transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  3. Cliquer pour finaliser sur le site choisi.
+                  3. Accès aux offres contextualisées par véhicule.
                 </motion.span>
               </div>
             </Reveal>
@@ -263,10 +447,10 @@ export default function ResultsPage() {
                       Pièce identifiée
                     </p>
                     <h2 className="mt-2 text-xl md:text-2xl font-bold tracking-tight">
-                      Filtre à huile moteur
+                      Filtre à Huile (Bosch)
                     </h2>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Canonical Part Number (CPN) : <span className="font-mono">CPN-OF-00123</span>
+                      Canonical Part Number (CPN) : <span className="font-mono">CPN-VAG-OIL-FILT-01</span>
                     </p>
                   </div>
                   <div className="rounded-2xl bg-primary/10 px-4 py-3 text-xs md:text-sm text-primary border border-primary/30">
@@ -278,41 +462,64 @@ export default function ResultsPage() {
                 </div>
 
                 <div className="mt-6 grid gap-4 md:grid-cols-3 text-sm">
-                  <div className="rounded-2xl bg-background/60 border border-border/60 p-4 grid gap-4 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] items-center">
+                  {/* Vehicle Card */}
+                  <div className="flex flex-col justify-between rounded-3xl bg-background/50 border border-border/60 p-5 md:p-6 transition-colors hover:bg-background/80">
                     <div>
-                      <p className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80">
+                      <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/70">
                         Véhicule
                       </p>
-                      <p className="mt-2 font-semibold">Toyota Corolla 1.8</p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        2016–2019 • Essence • VIN partiel
+                      <p className="mt-3 text-lg font-bold text-foreground">Audi RS6 Avant</p>
+                      <div className="mt-1 flex flex-wrap gap-1.5">
+                        <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">2020</span>
+                        <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">V8 Biturbo</span>
+                        <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">VIN partiel</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* OEM References Card */}
+                  <div className="flex flex-col justify-between rounded-3xl bg-background/50 border border-border/60 p-5 md:p-6 transition-colors hover:bg-background/80">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/70">
+                        Même pièce — références équivalentes
+                      </p>
+                      <div className="mt-3 flex flex-col gap-1">
+                        <p className="font-mono text-sm font-semibold text-foreground tracking-tight">
+                          F 026 407 116 (Bosch)
+                        </p>
+                        <p className="font-mono text-sm font-semibold text-foreground/80 tracking-tight">
+                          06M 198 405 F (VAG OEM)
+                        </p>
+                        <p className="font-mono text-sm font-semibold text-foreground/80 tracking-tight">
+                          HU 7049 z (Mann-Filter)
+                        </p>
+                      </div>
+                    </div>
+                    <p className="mt-4 text-[10px] leading-relaxed text-muted-foreground">
+                      <span className="font-medium text-foreground/80">Interchange type :</span> Équivalences validées techniquement.
+                    </p>
+                  </div>
+
+                  {/* Confidence Score Card */}
+                  <div className="relative overflow-hidden rounded-3xl bg-background/50 border border-border/60 p-5 md:p-6 transition-colors hover:bg-background/80">
+                    <div className="relative z-10 flex h-full flex-col justify-between">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/70">
+                          Niveau de confiance
+                        </p>
+                        <div className="mt-2 flex items-baseline gap-1">
+                          <span className="text-3xl font-extrabold text-foreground tracking-tighter">4.95</span>
+                          <span className="text-xs font-medium text-muted-foreground">/ 5.00</span>
+                        </div>
+                      </div>
+                      <p className="mt-3 max-w-[60%] text-[10px] leading-relaxed text-muted-foreground">
+                        Combinaison de fitment, données catalogue et historique.
                       </p>
                     </div>
-                    <div className="h-32 md:h-40">
-                      <ThreePreview modelUrl={vehicleModelUrl} autoRotateSpeed={0.7} className="h-full w-full" />
-                    </div>
-                  </div>
-                  <div className="rounded-2xl bg-background/60 border border-border/60 p-4 grid gap-4 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] items-center">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80">
-                      Références OEM
-                    </p>
-                    <p className="mt-2 font-mono text-xs">
-                      90915-10004 • 90915-YZZE1
-                    </p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Interchange type : OEM et équivalents validés.
-                    </p>
-                  </div>
-                  <div className="rounded-2xl bg-background/60 border border-border/60 p-4 grid gap-4 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] items-center">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80">
-                      Niveau de confiance
-                    </p>
-                    <p className="mt-2 font-semibold">Score 0,96 / 1,00</p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Combinaison de fitment, données catalogue et historique de clics.
-                    </p>
-                    <div className="h-32 md:h-40">
-                      <ThreePreview modelUrl={partModelUrl} autoRotateSpeed={0.5} className="h-full w-full" />
+                    
+                    {/* 3D Preview positioned absolute right */}
+                    <div className="absolute -right-6 bottom-0 top-0 w-32 md:w-40 opacity-100">
+                       <ThreePreview modelUrl={partModelUrl} autoRotateSpeed={0.5} className="h-full w-full" />
                     </div>
                   </div>
                 
@@ -328,7 +535,7 @@ export default function ResultsPage() {
                     </div>
                     <div className="flex items-start gap-2">
                       <p className="flex-1">
-                        Ici, vérifiez que la description, le véhicule, les références OEM et le score de confiance correspondent à votre besoin.
+                        Identification Certifiée : lAwôl valide la pièce techniquement (CPN) et confirme sa compatibilité avant même de parler prix.
                       </p>
                       <button
                         type="button"
@@ -344,14 +551,77 @@ export default function ResultsPage() {
               </div>
             </Reveal>
 
+            <Reveal width="100%" delay={0.2}>
+              <div className="rounded-3xl border border-border bg-card p-6 md:p-8 shadow-sm">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                  <div>
+                    <h3 className="text-lg md:text-xl font-bold tracking-tight flex items-center gap-2">
+                      <GitMerge className="h-5 w-5 text-primary" />
+                      Compatibilité Multi-Véhicules
+                    </h3>
+                    <p className="mt-1 text-sm font-medium text-foreground">
+                      Une même pièce peut équiper plusieurs marques, modèles et années.
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-end gap-1">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs font-medium text-muted-foreground">
+                      <Check className="h-3.5 w-3.5 text-green-500" />
+                      Compatible avec 4 véhicules
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary">
+                      Même pièce. Plusieurs véhicules.
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {compatibleVehicles.map((vehicle) => {
+                    const isActive = selectedVehicle === vehicle.model;
+                    return (
+                      <div
+                        key={vehicle.model}
+                        onClick={() => setSelectedVehicle(vehicle.model)}
+                        className={cn(
+                          "group relative flex items-center justify-between rounded-2xl border px-4 py-3 transition-all duration-200 cursor-pointer",
+                          isActive
+                            ? "border-primary bg-primary/5 shadow-sm"
+                            : "border-border bg-background hover:border-primary/50 hover:bg-muted/50"
+                        )}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={cn(
+                            "flex h-8 w-8 items-center justify-center rounded-full transition-colors",
+                            isActive ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:bg-muted/80"
+                          )}>
+                            <Car className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <p className={cn("text-sm font-bold", isActive ? "text-primary" : "text-foreground")}>
+                              {vehicle.make} {vehicle.model}
+                            </p>
+                            <p className="text-[11px] text-muted-foreground">
+                              {vehicle.year} • {vehicle.engine}
+                            </p>
+                          </div>
+                        </div>
+                        {isActive && (
+                          <div className="absolute right-4 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-primary animate-pulse" />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </Reveal>
+
             <Reveal width="100%" delay={0.25}>
               <div className="relative flex items-center justify-between gap-4">
                 <div>
                   <h2 className="text-lg md:text-xl font-semibold tracking-tight">
-                    Offres partenaires pour cette pièce
+                    Offres disponibles pour {selectedVehicle}
                   </h2>
-                  <p className="mt-1 text-xs md:text-sm text-muted-foreground">
-                    Les prix et disponibilités sont indicatifs. Le détail final se fait directement sur le site du partenaire.
+                  <p className="mt-1 text-sm font-medium text-foreground">
+                    Offres pour ce véhicule avec une pièce déjà validée techniquement.
                   </p>
                 </div>
                 <div className="hidden md:flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs text-muted-foreground border border-border/60">
@@ -371,7 +641,7 @@ export default function ResultsPage() {
                     </div>
                     <div className="flex items-start gap-2">
                       <p className="flex-1">
-                        Comparez les partenaires, les types d’offres, les prix et les scores. Le clic vous envoie directement sur le site choisi.
+                        Intelligence Industrielle : Cliquez sur les autres véhicules compatibles. Constatez que pour une même pièce, le marché change.
                       </p>
                       <button
                         type="button"
@@ -389,8 +659,8 @@ export default function ResultsPage() {
             </Reveal>
 
             <div className="space-y-4">
-              {offers.map((offer, index) => (
-                <Reveal key={offer.mpn} width="100%" delay={0.3 + index * 0.08}>
+              {currentOffers.map((offer, index) => (
+                <Reveal key={`${selectedVehicle}-${offer.mpn}-${index}`} width="100%" delay={0.1 + index * 0.05}>
                   <div className="rounded-2xl border border-border bg-card/90 px-4 py-4 md:px-6 md:py-5 shadow-sm hover:shadow-lg transition-shadow duration-200">
                     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                       <div className="space-y-1">
