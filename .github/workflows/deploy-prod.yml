@@ -1,0 +1,44 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 
+      name: production
+      url: https://lawol.app
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Create .env.production.local
+        run: |
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env.production.local
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env.production.local
+          echo "STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}" >> .env.production.local
+          # Ajouter d'autres variables ici
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Production
+        run: |
+          chmod +x scripts/deploy.sh
+          ./scripts/deploy.sh production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          # Autres secrets de déploiement

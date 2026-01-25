@@ -1,0 +1,43 @@
+name: Deploy Pre-production
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 
+      name: preproduction
+      url: https://preprod.lawol.app
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Create .env.preprod.local
+        run: |
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env.preprod.local
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env.preprod.local
+          echo "STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}" >> .env.preprod.local
+          # Ajouter d'autres variables ici
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Pre-production
+        run: |
+          chmod +x scripts/deploy.sh
+          ./scripts/deploy.sh preprod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
