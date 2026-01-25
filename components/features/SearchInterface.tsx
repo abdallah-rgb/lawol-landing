@@ -232,7 +232,7 @@ export function SearchInterface({ isOpen, onClose }: SearchInterfaceProps) {
                           <div className="mb-6 p-4 bg-muted/30 rounded-2xl border border-border/50">
                             <div className="flex items-center justify-between mb-3">
                               <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                                Véhicule compatible (à sélectionner)
+                                Véhicules compatibles avec cette pièce
                               </label>
                               {selectedVehicle && (
                                 <span className="flex items-center gap-1 text-[10px] font-medium text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded-full">
