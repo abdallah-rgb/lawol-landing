@@ -18,6 +18,7 @@ interface FloatingIconsProps {
 }
 
 export function FloatingIcons({ className }: FloatingIconsProps) {
+  // Config state for floating icons
   const [configs, setConfigs] = useState<any[]>([]);
 
   useEffect(() => {
