@@ -48,6 +48,29 @@ Dans chaque environnement GitHub (ou au niveau du repo si partagé), définissez
 
 ---
 
+## ☁️ Déploiement Firebase Hosting (Alternative)
+
+Nous avons également configuré un pipeline pour déployer l'application sur Firebase Hosting.
+
+### Configuration Requise
+
+1.  **Générer une clé de compte de service Firebase** :
+    *   Allez dans la console Firebase > Paramètres du projet > Comptes de service.
+    *   Cliquez sur "Générer une nouvelle clé privée".
+    *   Copiez le contenu du fichier JSON téléchargé.
+
+2.  **Ajouter le secret GitHub** :
+    *   Allez dans `Settings` > `Secrets and variables` > `Actions`.
+    *   Créez un secret nommé `FIREBASE_SERVICE_ACCOUNT_LAWOL_WEB`.
+    *   Collez le contenu JSON.
+
+### Fonctionnement
+
+*   Le workflow `.github/workflows/deploy-firebase.yml` se déclenche sur chaque push vers la branche `main`.
+*   Il construit l'application Next.js et la déploie sur le projet `lawol-web`.
+
+---
+
 ## 🛠️ Scripts Utilitaires
 
 Des scripts sont disponibles dans le dossier `scripts/` pour faciliter la gestion :
