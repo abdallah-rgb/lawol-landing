@@ -6,7 +6,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function Personas() {
   return (
-    <section className="py-32 md:py-40 bg-muted transition-colors duration-300">
+    <section className="py-32 md:py-40 bg-muted dark:bg-black transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6">
         <div className="mb-20 md:mb-32 text-center">
           <Reveal width="100%">

@@ -9,7 +9,7 @@ export function Problems() {
       <div className="container mx-auto max-w-6xl px-4 md:px-6">
         <div className="text-center mb-10">
           <Reveal width="100%">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-foreground mb-4">Le Problème Structurel</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-foreground mb-4" suppressHydrationWarning>Le Problème Structurel</h2>
           </Reveal>
           <Reveal width="100%" delay={0.2}>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -20,7 +20,7 @@ export function Problems() {
 
         <div className="grid gap-8 lg:gap-12 lg:grid-cols-2 items-stretch">
           <Reveal width="100%" delay={0.2}>
-            <div className="relative overflow-hidden rounded-3xl bg-muted/50 p-6 md:p-8 h-full border border-red-500/10 hover:border-red-500/30 transition-colors">
+            <div className="relative overflow-hidden rounded-3xl bg-muted/50 dark:bg-white/5 p-6 md:p-8 h-full border border-red-500/10 hover:border-red-500/30 transition-colors">
               <div className="space-y-6">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="p-2.5 bg-red-500/10 rounded-xl text-red-500">

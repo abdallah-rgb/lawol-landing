@@ -10,7 +10,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 const navLinks = [
   { name: "Comment ça marche", href: "/#how-it-works" },
   { name: "Fonctionnalités", href: "/#features" },
-  { name: "Espace Partenaires", href: "/#partners" },
+  { name: "Espace Partenaires", href: "/partenaires" },
   { name: "Contact", href: "/#contact" },
 ];
 

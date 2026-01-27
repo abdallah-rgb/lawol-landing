@@ -80,9 +80,9 @@ export function Hero() {
                 </button>
                 <Link
                   href="#how-it-works"
-                  className="group relative overflow-hidden rounded-full bg-background border-2 border-secondary px-8 py-4 text-base font-bold text-secondary transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:scale-105 hover:shadow-xl"
+                  className="group relative overflow-hidden rounded-full bg-background border-2 border-secondary dark:border-white px-8 py-4 text-base font-bold text-foreground transition-all duration-300 hover:bg-secondary hover:text-foreground hover:scale-105 hover:shadow-xl"
                 >
-                  <span className="relative z-10">Comment ça marche</span>
+                  Comment ça marche
                 </Link>
               </div>
             </Reveal>
@@ -122,7 +122,7 @@ export function Hero() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 1.7, duration: 0.5 }}
               >
-                <span className="font-bold text-secondary">500+</span> automobilistes satisfaits
+                <span className="font-bold text-foreground">500+</span> automobilistes satisfaits
               </motion.div>
             </div>
           </div>
@@ -134,7 +134,7 @@ export function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent z-10 pointer-events-none" />
                 
                 {/* 
-                  Vidéo locale : hero-parts.mp4.mp4
+                  Vidéo locale
                 */}
                 <video
                   autoPlay

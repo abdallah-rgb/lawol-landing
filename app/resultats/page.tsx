@@ -217,6 +217,8 @@ function ResultsContent() {
   const searchParams = useSearchParams();
   const initialVehicle = searchParams.get("vehicle") || "RS6 Avant";
 
+  const vin = searchParams.get("vin");
+
   const [showStep1, setShowStep1] = useState(false);
   const [showStep2, setShowStep2] = useState(true);
   const [showStep3, setShowStep3] = useState(true);
@@ -413,7 +415,7 @@ function ResultsContent() {
             <Reveal width="100%" delay={0.15}>
               <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-muted-foreground">
                 <motion.span
-                  className="inline-flex items-center rounded-full bg-muted px-3 py-1"
+                  className="inline-flex items-center rounded-full bg-muted dark:bg-white/10 px-3 py-1"
                   initial={{ opacity: 0, scale: 0.9, y: 6 }}
                   animate={{ opacity: 1, scale: [1, 1.06, 1], y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -421,7 +423,7 @@ function ResultsContent() {
                   1. Identification univoque (CPN) et validation technique.
                 </motion.span>
                 <motion.span
-                  className="inline-flex items-center rounded-full bg-muted px-3 py-1"
+                  className="inline-flex items-center rounded-full bg-muted dark:bg-white/10 px-3 py-1"
                   initial={{ opacity: 0, scale: 0.9, y: 6 }}
                   animate={{ opacity: 1, scale: [1, 1.06, 1], y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -429,7 +431,7 @@ function ResultsContent() {
                   2. Révélation de la standardisation industrielle.
                 </motion.span>
                 <motion.span
-                  className="inline-flex items-center rounded-full bg-muted px-3 py-1"
+                  className="inline-flex items-center rounded-full bg-muted dark:bg-white/10 px-3 py-1"
                   initial={{ opacity: 0, scale: 0.9, y: 6 }}
                   animate={{ opacity: 1, scale: [1, 1.06, 1], y: 0 }}
                   transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -472,7 +474,7 @@ function ResultsContent() {
                       <div className="mt-1 flex flex-wrap gap-1.5">
                         <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">2020</span>
                         <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">V8 Biturbo</span>
-                        <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">VIN partiel</span>
+                        <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">{vin || "VIN partiel"}</span>
                       </div>
                     </div>
                   </div>

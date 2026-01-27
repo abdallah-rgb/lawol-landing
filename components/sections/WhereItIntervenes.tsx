@@ -31,7 +31,7 @@ export function WhereItIntervenes() {
                   <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <item.icon className="h-7 w-7" />
                   </div>
-                  <p className="text-lg font-bold text-foreground">
+                  <p className="text-lg font-bold text-foreground" suppressHydrationWarning>
                     {item.label}
                   </p>
                 </div>

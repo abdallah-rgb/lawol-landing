@@ -44,7 +44,7 @@ const features = [
 
 export function Features() {
   return (
-    <section id="features" className="bg-muted/30 py-16 lg:py-0 lg:h-full lg:flex lg:items-center transition-colors duration-300">
+    <section id="features" className="bg-muted/30 dark:bg-black/40 py-16 lg:py-0 lg:h-full lg:flex lg:items-center transition-colors duration-300">
       <div className="container mx-auto max-w-7xl px-4 md:px-6">
         <div className="mb-10 lg:mb-12 text-center">
           <Reveal width="100%" delay={0.1}>
