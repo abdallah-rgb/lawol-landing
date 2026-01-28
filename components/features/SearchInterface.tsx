@@ -7,6 +7,7 @@ import { Upload, X, ScanLine, CheckCircle2, Loader2, Camera, Smartphone, Info, F
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThreePreview } from "@/components/ui/ThreePreview";
+import { VehicleScanningLoader } from "@/components/ui/VehicleScanningLoader";
 import { useSmoothScroll } from "@/components/ui/SmoothScroll";
 
 interface SearchInterfaceProps {
@@ -308,12 +309,19 @@ export function SearchInterface({ isOpen, onClose }: SearchInterfaceProps) {
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.9, opacity: 0 }}
                   className={cn(
-                    "relative bg-black rounded-3xl overflow-hidden shadow-2xl w-full max-w-sm mx-auto border border-white/10 transition-all duration-500",
-                    step === "complete" ? "h-[650px]" : "aspect-[4/5]"
+                    "relative rounded-3xl overflow-hidden shadow-2xl w-full max-w-sm mx-auto border border-border/50 transition-all duration-500",
+                    step === "complete" ? "h-[650px] bg-card" : "aspect-[4/5] bg-gradient-to-br from-gray-900 to-black"
                   )}
                 >
-                  {/* Image Background */}
-                  {selectedImage && (
+                  {/* 3D Scanning Animation Background - Only for VIN or when scanning */}
+                  {searchMode === "vin" && step !== "complete" && (
+                     <div className="absolute inset-0 z-0">
+                        <VehicleScanningLoader step={step} />
+                     </div>
+                  )}
+
+                  {/* Image Background (for Image mode) */}
+                  {searchMode === "image" && selectedImage && (
                     <img 
                       src={selectedImage} 
                       alt="Part Preview" 
@@ -322,8 +330,8 @@ export function SearchInterface({ isOpen, onClose }: SearchInterfaceProps) {
                   )}
                   
                   {/* Scanning Overlay */}
-                  <div className="absolute inset-0 z-10">
-                    {step === "scanning" && (
+                  <div className="absolute inset-0 z-10 pointer-events-none">
+                    {step === "scanning" && searchMode === "image" && (
                       <motion.div 
                         initial={{ top: "0%" }}
                         animate={{ top: "100%" }}
@@ -334,8 +342,9 @@ export function SearchInterface({ isOpen, onClose }: SearchInterfaceProps) {
                     
                     <div className="absolute inset-0 flex flex-col z-20">
                       {step !== "complete" ? (
-                        <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
-                          <div className="mt-auto mb-8 bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl p-6 w-full">
+                        <div className="flex-1 flex flex-col items-center justify-end p-6 pb-12 text-center">
+                          {/* Floating Status Card */}
+                          <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6 w-full shadow-2xl">
                             {step === "scanning" && (
                               <div className="flex flex-col items-center gap-3">
                                 <ScanLine className="h-8 w-8 text-primary animate-pulse" />
