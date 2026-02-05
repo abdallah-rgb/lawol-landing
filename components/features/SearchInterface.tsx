@@ -528,7 +528,7 @@ export function SearchInterface({ isOpen, onClose }: SearchInterfaceProps) {
                   exit={{ scale: 0.9, opacity: 0 }}
                   className={cn(
                     "relative rounded-3xl overflow-hidden shadow-2xl w-full max-w-sm mx-auto border border-border/50 transition-all duration-500",
-                    (step === "complete" || step === "categories" || step === "parts" || step === "vin_selection" || step === "identify" || step === "identify_manual" || step === "identify_scan" || step === "identify_result") ? "md:h-[650px] h-[85dvh]" : "aspect-[4/5]",
+                    (step === "complete" || step === "categories" || step === "parts" || step === "vin_selection" || step === "identify" || step === "identify_manual" || step === "identify_scan" || step === "identify_result") ? "md:h-[650px] h-[80dvh]" : "aspect-[4/5]",
                     searchMode === "vin" || step !== "complete" ? "bg-zinc-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-black" : "bg-card"
                   )}
                 >
@@ -611,7 +611,7 @@ export function SearchInterface({ isOpen, onClose }: SearchInterfaceProps) {
                           {step === "vin_selection" && (
                             // --- RESULTAT VIN (NOUVEAU - DARK MODE) ---
                             <>
-                              <div className="p-6 pb-4 overflow-y-auto custom-scrollbar flex-1">
+                              <div className="p-6 pb-10 overflow-y-auto custom-scrollbar flex-1 overscroll-contain">
                                 <div className="flex items-center gap-3 mb-6">
                                   <div className="bg-green-500/20 p-2.5 rounded-full shrink-0">
                                     <CheckCircle2 className="h-6 w-6 text-green-600 dark:text-green-400" />
@@ -866,7 +866,7 @@ export function SearchInterface({ isOpen, onClose }: SearchInterfaceProps) {
                                      </button>
                                      <h3 className="text-xl font-bold text-foreground dark:text-white">Familles de pièces</h3>
                                 </div>
-                                <div className="p-6 overflow-y-auto custom-scrollbar flex-1">
+                                <div className="p-6 overflow-y-auto custom-scrollbar flex-1 overscroll-contain">
                                      <p className="text-muted-foreground mb-6 text-sm">
                                         Sélectionnez une catégorie pour voir les pièces compatibles avec votre véhicule.
                                      </p>
