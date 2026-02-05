@@ -11,7 +11,6 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { WhereItIntervenes } from "@/components/sections/WhereItIntervenes";
 import { Features } from "@/components/sections/Features";
 import { Story } from "@/components/sections/Story";
-import { StickySection } from "@/components/ui/StickySection";
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
@@ -24,35 +23,16 @@ export default function Home() {
 
       <Navbar />
       
-      {/* Sticky Card Sections */}
-      <StickySection index={1} className="bg-background">
+      <div className="flex flex-col w-full">
         <Hero />
-      </StickySection>
-
-      <StickySection index={2} className="bg-background">
         <Features />
-      </StickySection>
-
-      <StickySection index={3} className="bg-background">
         <Problems />
-      </StickySection>
-
-      <StickySection index={4} className="bg-background">
         <HowItWorks />
-      </StickySection>
-
-      <StickySection index={5} className="bg-background">
         <WhereItIntervenes />
-      </StickySection>
-
-      <StickySection index={6} className="bg-background">
         <Story />
-      </StickySection>
-
-      {/* Normal Scroll Sections (z-index higher to cover the last sticky card) */}
-      <div className="relative z-[100] bg-background shadow-[0_-20px_40px_rgba(0,0,0,0.1)]">
-        <Footer />
       </div>
+
+      <Footer />
     </main>
   );
 }

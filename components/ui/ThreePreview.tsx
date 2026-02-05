@@ -2,19 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import type {
-  Box3,
-  DirectionalLight,
   Group,
-  HemisphereLight,
   PerspectiveCamera,
   Scene,
-  Vector3,
   WebGLRenderer,
-  Object3D,
 } from "three";
 import type { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import type { GLTFLoader, GLTF } from "three/examples/jsm/loaders/GLTFLoader";
-import type { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
+import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 type ThreePreviewProps = {
   modelUrl: string;
@@ -31,6 +25,7 @@ export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: Thr
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const mountNode = mountRef.current;
     let renderer: WebGLRenderer | null = null;
     let scene: Scene | null = null;
     let camera: PerspectiveCamera | null = null;
@@ -127,7 +122,7 @@ export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: Thr
           setIsLoading(false);
         };
 
-        const onProgress = (xhr: ProgressEvent) => {
+        const onProgress = () => {
           // console.log((xhr.loaded / xhr.total * 100) + '% loaded');
         };
 
@@ -185,10 +180,10 @@ export function ThreePreview({ modelUrl, autoRotateSpeed = 0.6, className }: Thr
       if (frameId) cancelAnimationFrame(frameId);
       if (renderer) {
         renderer.dispose();
-        if (mountRef.current && renderer.domElement) {
+        if (mountNode && renderer.domElement) {
             // Check if child exists before removing to avoid errors
-             if(mountRef.current.contains(renderer.domElement)){
-                mountRef.current.removeChild(renderer.domElement);
+             if(mountNode.contains(renderer.domElement)){
+                mountNode.removeChild(renderer.domElement);
              }
         }
       }

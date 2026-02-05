@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Twitter, Linkedin, Instagram } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
 export function Footer() {
@@ -7,7 +6,7 @@ export function Footer() {
     <footer className="bg-muted py-24 md:py-32 text-foreground transition-colors duration-300">
       <div className="container mx-auto max-w-7xl px-4 md:px-6">
         <Reveal width="100%">
-          <div className="grid gap-12 md:grid-cols-4">
+          <div className="grid gap-12 md:grid-cols-3">
             <div>
               <h4 className="mb-4 text-xl font-bold">lAwôl</h4>
               <p className="text-muted-foreground">
@@ -33,20 +32,6 @@ export function Footer() {
               </ul>
             </div>
 
-            <div>
-              <h4 className="mb-4 text-lg font-bold">Nous suivre</h4>
-              <div className="flex gap-4">
-                <Link href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-background transition-all hover:-translate-y-1 hover:bg-primary hover:text-primary-foreground">
-                  <Twitter className="h-5 w-5" />
-                </Link>
-                <Link href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-background transition-all hover:-translate-y-1 hover:bg-primary hover:text-primary-foreground">
-                  <Linkedin className="h-5 w-5" />
-                </Link>
-                <Link href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-background transition-all hover:-translate-y-1 hover:bg-primary hover:text-primary-foreground">
-                  <Instagram className="h-5 w-5" />
-                </Link>
-              </div>
-            </div>
           </div>
         </Reveal>
 

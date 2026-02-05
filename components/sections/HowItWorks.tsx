@@ -23,7 +23,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-16 md:py-20 lg:py-0 lg:h-full lg:flex lg:items-center bg-background transition-colors duration-300 relative z-20">
+    <section id="how-it-works" className="py-16 md:py-24 lg:py-32 bg-background transition-colors duration-300 relative z-20">
       <div className="container mx-auto px-4 md:px-6 relative z-30">
         <Reveal width="100%" delay={0.1}>
           <div className="mb-12 md:mb-16 rounded-3xl bg-card border border-border p-8 md:p-10 text-center shadow-sm">

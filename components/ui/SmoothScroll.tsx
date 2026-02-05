@@ -21,7 +21,9 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       touchMultiplier: 2,
     });
 
-    setLenis(lenisInstance);
+    const timer = setTimeout(() => {
+      setLenis(lenisInstance);
+    }, 0);
 
     function raf(time: number) {
       lenisInstance.raf(time);
@@ -31,6 +33,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     requestAnimationFrame(raf);
 
     return () => {
+      clearTimeout(timer);
       lenisInstance.destroy();
       setLenis(null);
     };

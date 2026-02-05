@@ -11,7 +11,6 @@ const navLinks = [
   { name: "Comment ça marche", href: "/#how-it-works" },
   { name: "Fonctionnalités", href: "/#features" },
   { name: "Espace Partenaires", href: "/partenaires" },
-  { name: "Contact", href: "/#contact" },
 ];
 
 export function Navbar({ className }: { className?: string }) {
@@ -31,6 +30,7 @@ export function Navbar({ className }: { className?: string }) {
               <Link
                 key={link.name}
                 href={link.href}
+                suppressHydrationWarning
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-primary",
                   link.name === "Espace Partenaires"
@@ -70,6 +70,7 @@ export function Navbar({ className }: { className?: string }) {
                 <Link
                   key={link.name}
                   href={link.href}
+                  suppressHydrationWarning
                   className={cn(
                     "text-sm font-medium transition-colors hover:text-primary",
                     link.name === "Espace Partenaires"

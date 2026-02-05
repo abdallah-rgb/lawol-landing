@@ -22,10 +22,12 @@ export function Personas() {
             <div className="group relative h-full overflow-hidden rounded-3xl bg-card transition-all hover:shadow-xl border border-border hover:border-primary/50">
               <div className="relative h-64 w-full overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop"
+                  src="/images/persona-individual.jpg"
                   alt="Conducteur heureux"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  unoptimized
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 <div className="absolute bottom-6 left-6 text-white">
@@ -63,10 +65,12 @@ export function Personas() {
             <div className="group relative h-full overflow-hidden rounded-3xl bg-card text-foreground transition-all hover:shadow-xl border border-border hover:border-primary/50">
                <div className="relative h-64 w-full overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?q=80&w=800&auto=format&fit=crop"
+                  src="/images/persona-pro.jpg"
                   alt="Mécanicien professionnel"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  unoptimized
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 <div className="absolute bottom-6 left-6 text-white">

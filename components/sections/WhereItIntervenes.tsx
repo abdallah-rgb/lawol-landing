@@ -5,7 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function WhereItIntervenes() {
   return (
-    <section className="py-16 md:py-20 lg:py-0 lg:h-full lg:flex lg:items-center bg-background transition-colors duration-300 relative z-20">
+    <section className="py-16 md:py-24 lg:py-32 bg-background transition-colors duration-300 relative z-20">
       <div className="container mx-auto px-4 md:px-6 relative z-30">
         <Reveal width="100%" delay={0.1}>
           <div className="rounded-3xl border border-primary/20 bg-primary/5 px-6 py-8 md:px-12 md:py-16 shadow-lg">

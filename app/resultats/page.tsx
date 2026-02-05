@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useEffect, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Reveal } from "@/components/ui/Reveal";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { ArrowUpRight, ShieldCheck, BadgePercent, Shuffle, Car, GitMerge, Check } from "lucide-react";
+import { ArrowUpRight, ShieldCheck, BadgePercent, Shuffle, GitMerge, Check } from "lucide-react";
 import { ThreePreview } from "@/components/ui/ThreePreview";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { cn } from "@/lib/utils";
 
 const compatibleVehicles = [
@@ -38,7 +39,21 @@ const compatibleVehicles = [
   },
 ];
 
-const vehicleOffers: Record<string, any[]> = {
+interface VehicleOffer {
+  partner: string;
+  country: string;
+  affiliateType: string;
+  mpn: string;
+  brand: string;
+  interchangeType: string;
+  confidenceScore: number;
+  priceLabel: string;
+  estimatedPrice: string;
+  url: string;
+  highlight: string;
+}
+
+const vehicleOffers: Record<string, VehicleOffer[]> = {
   "RS6 Avant": [
     {
       partner: "Oscaro",
@@ -214,8 +229,10 @@ export default function ResultsPage() {
 }
 
 function ResultsContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const initialVehicle = searchParams.get("vehicle") || "RS6 Avant";
+  const partQuery = searchParams.get("q");
 
   const vin = searchParams.get("vin");
 
@@ -223,19 +240,19 @@ function ResultsContent() {
   const [showStep2, setShowStep2] = useState(true);
   const [showStep3, setShowStep3] = useState(true);
   const [vehicleModelUrl, setVehicleModelUrl] = useState("/models/vehicles/2020_audi_rs6_avant.glb");
-  const [partModelUrl, setPartModelUrl] = useState("/models/parts/oil_filter_bosch_-_low_poly.glb");
-  const [selectedVehicle, setSelectedVehicle] = useState(initialVehicle);
-
-  useEffect(() => {
-    const vehicle = searchParams.get("vehicle");
-    if (vehicle) {
-      setSelectedVehicle(vehicle);
-    }
-  }, [searchParams]);
+  const [partModelUrl] = useState("/models/parts/oil_filter_bosch_-_low_poly.glb");
+  
+  const selectedVehicle = searchParams.get("vehicle") || initialVehicle;
   
   const currentOffers = vehicleOffers[selectedVehicle] || vehicleOffers["RS6 Avant"];
 
   const allHelpClosed = !showStep1 && !showStep2 && !showStep3;
+
+  const handleVehicleSelect = (model: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("vehicle", model);
+    router.replace(`?${params.toString()}`, { scroll: false });
+  };
 
   useEffect(() => {
     // Only access window/localStorage on client side
@@ -303,7 +320,7 @@ function ResultsContent() {
                 Exemple de résultats
               </p>
               <h1 className="mt-3 text-2xl md:text-3xl font-extrabold tracking-tight">
-                Résultats pour une Plaquette de frein Bosch
+                Résultats pour {partQuery ? partQuery : "une Plaquette de frein Bosch"}
               </h1>
               <p className="mt-2 text-sm md:text-base text-muted-foreground max-w-xl">
                   L’utilisateur arrive chez le distributeur avec une pièce déjà validée sur le plan technique.
@@ -382,7 +399,7 @@ function ResultsContent() {
                       </div>
                       <div className="flex items-start gap-2">
                         <p className="flex-1">
-                          Simulation : Définissez le contexte véhicule/pièce. En conditions réelles, l'IA lAwôl détecte ces infos instantanément.
+                          Simulation : Définissez le contexte véhicule/pièce. En conditions réelles, l&apos;IA lAwôl détecte ces infos instantanément.
                         </p>
                         <button
                           type="button"
@@ -398,7 +415,7 @@ function ResultsContent() {
                   )}
                 </div>
                 <div className="mt-2 h-48 md:h-56 w-full rounded-3xl border border-border/50 bg-neutral-100 shadow-sm overflow-hidden md:col-start-1 md:row-start-2 self-start">
-                  <ThreePreview modelUrl={vehicleModelUrl} autoRotateSpeed={0.5} className="h-full w-full mix-blend-multiply" />
+                  <BrandLogo vehicle={vehicleModelUrl} className="h-full w-full mix-blend-multiply" />
                 </div>
                 <div className="mt-2 h-48 md:h-56 w-full rounded-3xl border border-border/50 bg-neutral-100 shadow-sm overflow-hidden md:col-start-2 md:row-start-2 self-start">
                    <ThreePreview modelUrl={partModelUrl} autoRotateSpeed={0.5} className="h-full w-full mix-blend-multiply" />
@@ -449,7 +466,7 @@ function ResultsContent() {
                       Pièce identifiée
                     </p>
                     <h2 className="mt-2 text-xl md:text-2xl font-bold tracking-tight">
-                      Filtre à Huile (Bosch)
+                      {partQuery || "Filtre à Huile (Bosch)"}
                     </h2>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Canonical Part Number (CPN) : <span className="font-mono">CPN-VAG-OIL-FILT-01</span>
@@ -582,7 +599,7 @@ function ResultsContent() {
                     return (
                       <div
                         key={vehicle.model}
-                        onClick={() => setSelectedVehicle(vehicle.model)}
+                        onClick={() => handleVehicleSelect(vehicle.model)}
                         className={cn(
                           "group relative flex items-center justify-between rounded-2xl border px-4 py-3 transition-all duration-200 cursor-pointer",
                           isActive
@@ -592,10 +609,10 @@ function ResultsContent() {
                       >
                         <div className="flex items-center gap-3">
                           <div className={cn(
-                            "flex h-8 w-8 items-center justify-center rounded-full transition-colors",
+                            "relative flex h-8 w-8 items-center justify-center rounded-full transition-colors overflow-hidden",
                             isActive ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:bg-muted/80"
                           )}>
-                            <Car className="h-4 w-4" />
+                            <BrandLogo vehicle={vehicle.make} variant="icon" className="w-full h-full" />
                           </div>
                           <div>
                             <p className={cn("text-sm font-bold", isActive ? "text-primary" : "text-foreground")}>

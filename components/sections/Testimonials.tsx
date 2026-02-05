@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Star } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -52,13 +53,15 @@ export function Testimonials() {
                   &quot;{testimonial.content}&quot;
                 </p>
                 <div className="flex items-center gap-4">
-                  <div
-                    className="h-12 w-12 rounded-full bg-muted"
-                    style={{
-                      backgroundImage: `url(${testimonial.image})`,
-                      backgroundSize: "cover",
-                    }}
-                  />
+                  <div className="relative h-12 w-12 rounded-full overflow-hidden bg-muted">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                    />
+                  </div>
                   <div>
                     <div className="font-bold text-foreground">{testimonial.name}</div>
                     <div className="text-sm text-muted-foreground">{testimonial.role}</div>

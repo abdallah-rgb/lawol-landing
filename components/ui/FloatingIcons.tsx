@@ -17,9 +17,17 @@ interface FloatingIconsProps {
   className?: string;
 }
 
+interface IconConfig {
+  x: number;
+  y: number;
+  size: number;
+  duration: number;
+  delay: number;
+}
+
 export function FloatingIcons({ className }: FloatingIconsProps) {
   // Config state for floating icons
-  const [configs, setConfigs] = useState<any[]>([]);
+  const [configs, setConfigs] = useState<IconConfig[]>([]);
 
   useEffect(() => {
     const newConfigs = Array.from({ length: 25 }, () => ({
@@ -29,7 +37,12 @@ export function FloatingIcons({ className }: FloatingIconsProps) {
       duration: 20 + Math.random() * 20,
       delay: Math.random() * 5,
     }));
-    setConfigs(newConfigs);
+    
+    const timer = setTimeout(() => {
+      setConfigs(newConfigs);
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, []);
 
   if (configs.length === 0) return null;

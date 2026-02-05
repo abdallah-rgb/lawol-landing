@@ -5,7 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function Problems() {
   return (
-    <section className="py-16 md:py-20 lg:py-0 lg:h-full lg:flex lg:items-center bg-background transition-colors duration-300">
+    <section className="py-16 md:py-24 lg:py-32 bg-background transition-colors duration-300">
       <div className="container mx-auto max-w-6xl px-4 md:px-6">
         <div className="text-center mb-10">
           <Reveal width="100%">

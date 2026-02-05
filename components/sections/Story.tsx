@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
 import { Globe2, HeartHandshake, Lightbulb } from "lucide-react";
+import { useState } from "react";
 
 export function Story() {
+  const [imgError, setImgError] = useState(false);
+
   return (
     <section className="py-20 md:py-32 bg-background transition-colors duration-300 relative">
       {/* Decorative Background Elements */}
@@ -77,14 +80,27 @@ export function Story() {
           {/* Visual Content */}
           <Reveal width="100%" delay={0.4}>
             <div className="relative">
-              <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-border">
-                <Image
-                  src="https://images.unsplash.com/photo-1486006920555-c77dcf18193c?q=80&w=2000&auto=format&fit=crop"
-                  alt="Mécanique automobile en Afrique"
-                  fill
-                  className="object-cover hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+              <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-border bg-muted">
+                {!imgError ? (
+                  <Image
+                    src="/images/mechanic-story.jpg"
+                    alt="Mécanique automobile en Afrique"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover hover:scale-105 transition-transform duration-700"
+                    onError={() => setImgError(true)}
+                    priority
+                    unoptimized
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center bg-zinc-900 text-white p-8 text-center">
+                    <div>
+                      <p className="text-lg font-bold mb-2">Image non disponible</p>
+                      <p className="text-sm text-zinc-400">Impossible de charger l&apos;illustration.</p>
+                    </div>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent pointer-events-none" />
                 <div className="absolute bottom-6 left-6 right-6 text-foreground">
                   <p className="text-xl font-bold mb-1">&quot;L&apos;ambition est globale.&quot;</p>
                   <p className="text-sm text-muted-foreground">Utile pour l&apos;utilisateur, créateur de valeur pour le marché.</p>
@@ -95,7 +111,7 @@ export function Story() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
-                className="absolute -bottom-6 -right-6 bg-card p-5 rounded-xl shadow-xl border border-border max-w-xs hidden md:block"
+                className="absolute -bottom-6 left-4 right-4 md:left-auto md:-right-6 bg-card p-5 rounded-xl shadow-xl border border-border md:max-w-xs"
               >
                 <p className="text-xs text-muted-foreground italic">
                   &quot;Une grande partie des décisions d’achat repose encore sur une validation visuelle. lAwôl standardise cette étape avant l’achat. &quot;

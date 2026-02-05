@@ -21,7 +21,7 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[95vh] lg:min-h-0 lg:h-full items-center overflow-hidden bg-background px-4 pt-32 pb-20 lg:py-0"
+      className="relative flex min-h-[100dvh] items-center overflow-hidden bg-background px-4 pt-32 pb-20 lg:pt-40 lg:pb-32"
     >
       {/* Background Parallax Element */}
       <motion.div
@@ -80,7 +80,7 @@ export function Hero() {
                 </button>
                 <Link
                   href="#how-it-works"
-                  className="group relative overflow-hidden rounded-full bg-background border-2 border-secondary dark:border-white px-8 py-4 text-base font-bold text-foreground transition-all duration-300 hover:bg-secondary hover:text-foreground hover:scale-105 hover:shadow-xl"
+                  className="group relative overflow-hidden rounded-full bg-background border-2 border-secondary dark:border-white px-8 py-4 text-base font-bold text-foreground transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:scale-105 hover:shadow-xl"
                 >
                   Comment ça marche
                 </Link>
@@ -121,6 +121,7 @@ export function Hero() {
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 1.7, duration: 0.5 }}
+                suppressHydrationWarning
               >
                 <span className="font-bold text-foreground">500+</span> automobilistes satisfaits
               </motion.div>
@@ -128,7 +129,7 @@ export function Hero() {
           </div>
 
           {/* Right Column: Visuals */}
-          <div className="relative hidden lg:flex items-center justify-center">
+          <div className="relative flex items-center justify-center mt-12 lg:mt-0">
             <Reveal width="100%" delay={0.4} className="w-full">
               <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-border bg-card">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent z-10 pointer-events-none" />

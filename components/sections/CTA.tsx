@@ -13,10 +13,12 @@ export function CTA() {
             {/* Background Image */}
             <div className="absolute inset-0 opacity-20 dark:opacity-10">
               <Image
-                src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=2000&auto=format&fit=crop"
+                src="/images/cta-background.jpg"
                 alt="Background Car"
                 fill
+                sizes="100vw"
                 className="object-cover"
+                unoptimized
               />
             </div>
             
