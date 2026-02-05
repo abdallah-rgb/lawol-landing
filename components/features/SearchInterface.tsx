@@ -528,7 +528,7 @@ export function SearchInterface({ isOpen, onClose }: SearchInterfaceProps) {
                   exit={{ scale: 0.9, opacity: 0 }}
                   className={cn(
                     "relative rounded-3xl overflow-hidden shadow-2xl w-full max-w-sm mx-auto border border-border/50 transition-all duration-500",
-                    (step === "complete" || step === "categories" || step === "parts" || step === "vin_selection" || step === "identify" || step === "identify_manual" || step === "identify_scan" || step === "identify_result") ? "md:h-[650px] h-auto min-h-[500px]" : "aspect-[4/5]",
+                    (step === "complete" || step === "categories" || step === "parts" || step === "vin_selection" || step === "identify" || step === "identify_manual" || step === "identify_scan" || step === "identify_result") ? "md:h-[650px] h-[85dvh]" : "aspect-[4/5]",
                     searchMode === "vin" || step !== "complete" ? "bg-zinc-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-black" : "bg-card"
                   )}
                 >
